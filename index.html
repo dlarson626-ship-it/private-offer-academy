@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#215C56" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1417" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PO Academy">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Private Offer Academy</title>
+<meta name="description" content="Learn and practice creating AWS, Azure, and Google Cloud Marketplace private offers, including AWS Express Private Offers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
+  body{margin:0;}
+  img{max-width:100%;}
+</style>
+</head>
+<body>
+
+
+
+
+
+
+<style>
+  :root{
+    --bg:#F3F6F8; --surface:#FFFFFF; --surface-2:#EAEFF3; --surface-3:#DEE6EB;
+    --ink:#101820; --ink-soft:#4C5B66; --ink-faint:#7C8B96;
+    --border:#D6E0E6; --border-strong:#B9C7CF;
+    --accent:#215C56; --accent-strong:#153E39; --accent-tint:#E3EEEC; --accent-ink:#0E3B36;
+    --aws:#C6650B; --aws-tint:#FBEADA; --aws-ink:#7A3E06;
+    --azure:#215A9C; --azure-tint:#E3EDF7; --azure-ink:#163E6E;
+    --gcp:#2E7D4F; --gcp-tint:#E4F1E9; --gcp-ink:#1E5536;
+    --good:#1F7A4D; --good-tint:#E4F3EA; --warn:#9A6400; --warn-tint:#FBF1DA; --bad:#B3261E; --bad-tint:#FBE6E4;
+    --shadow:0 1px 2px rgba(16,24,32,.04), 0 6px 20px -8px rgba(16,24,32,.12);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1417; --surface:#161D21; --surface-2:#1E262B; --surface-3:#2A3339;
+      --ink:#EAF0F2; --ink-soft:#AEBDC4; --ink-faint:#7C8B96;
+      --border:#2B3439; --border-strong:#3A454B;
+      --accent:#5FBBAA; --accent-strong:#85D2C2; --accent-tint:#173832; --accent-ink:#9FE3D5;
+      --aws:#E1913F; --aws-tint:#3A2C15; --aws-ink:#F3C48A;
+      --azure:#6FA7E3; --azure-tint:#17293D; --azure-ink:#AFCCEE;
+      --gcp:#6FC08E; --gcp-tint:#173424; --gcp-ink:#A9DDBD;
+      --good:#5FBB86; --good-tint:#123322; --warn:#D9A73B; --warn-tint:#332B12; --bad:#E27D74; --bad-tint:#3A1B18;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -10px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1417; --surface:#161D21; --surface-2:#1E262B; --surface-3:#2A3339;
+    --ink:#EAF0F2; --ink-soft:#AEBDC4; --ink-faint:#7C8B96;
+    --border:#2B3439; --border-strong:#3A454B;
+    --accent:#5FBBAA; --accent-strong:#85D2C2; --accent-tint:#173832; --accent-ink:#9FE3D5;
+    --aws:#E1913F; --aws-tint:#3A2C15; --aws-ink:#F3C48A;
+    --azure:#6FA7E3; --azure-tint:#17293D; --azure-ink:#AFCCEE;
+    --gcp:#6FC08E; --gcp-tint:#173424; --gcp-ink:#A9DDBD;
+    --good:#5FBB86; --good-tint:#123322; --warn:#D9A73B; --warn-tint:#332B12; --bad:#E27D74; --bad-tint:#3A1B18;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -10px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    padding-inline:16px; padding-block:0 24px;
+  }
+  h1,h2,h3,h4,.display{font-family:'Manrope',system-ui,sans-serif; text-wrap:balance; letter-spacing:-0.01em;}
+  code,.mono,input,select,textarea{font-family:'IBM Plex Mono','IBM Plex Sans',monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--accent-tint);}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  .wrap{max-width:1080px; margin:0 auto;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    margin-inline:-16px; padding:14px 16px; margin-bottom:22px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none;}
+  .brand .mark{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    background:linear-gradient(145deg, var(--accent), var(--accent-strong));
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-family:'Manrope';
+    box-shadow:var(--shadow);
+  }
+  .brand .name{font-weight:800; font-size:16px;}
+  .brand .name small{display:block; font-weight:500; font-size:11px; color:var(--ink-faint); letter-spacing:.04em; text-transform:uppercase;}
+  .topbar .spacer{flex:1;}
+  .progress-chip{
+    display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border);
+    border-radius:999px; padding:6px 12px 6px 6px; font-size:12.5px; color:var(--ink-soft); box-shadow:var(--shadow);
+  }
+  .progress-chip .ring{width:22px;height:22px;flex:none;}
+  .home-btn{
+    border:1px solid var(--border); background:var(--surface); color:var(--ink-soft); border-radius:999px;
+    padding:7px 14px; font-size:13px; font-weight:600; cursor:pointer;
+  }
+  .home-btn:hover{border-color:var(--border-strong); color:var(--ink);}
+
+  /* ---------- Views ---------- */
+  [hidden]{display:none!important;}
+  .view{animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+  @media (prefers-reduced-motion: reduce){ .view{animation:none;} }
+
+  .eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink);}
+  .hero{margin-bottom:26px;}
+  .hero h1{font-size:clamp(26px,4vw,34px); margin:6px 0 8px;}
+  .hero p{color:var(--ink-soft); max-width:640px; line-height:1.55; margin:0;}
+
+  /* ---------- Module cards (home) ---------- */
+  .grid-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media (max-width:640px){.grid-cards{grid-template-columns:1fr;}}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px;
+    border-top:3px solid var(--accent);
+  }
+  .card.aws{border-top-color:var(--aws);}
+  .card.azure{border-top-color:var(--azure);}
+  .card.gcp{border-top-color:var(--gcp);}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .platform-badge{
+    font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px;
+  }
+  .platform-badge.aws{background:var(--aws-tint); color:var(--aws-ink);}
+  .platform-badge.azure{background:var(--azure-tint); color:var(--azure-ink);}
+  .platform-badge.gcp{background:var(--gcp-tint); color:var(--gcp-ink);}
+  .card h3{font-size:18px; margin:2px 0 0;}
+  .card .desc{color:var(--ink-soft); font-size:13.5px; line-height:1.5; margin:0; flex:1;}
+  .status-pill{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ink-faint);}
+  .status-pill .dot{width:7px;height:7px;border-radius:50%; background:var(--border-strong);}
+  .status-pill.done .dot{background:var(--good);}
+  .status-pill.done{color:var(--good);}
+  .status-pill.progress .dot{background:var(--warn);}
+  .status-pill.progress{color:var(--warn);}
+  .card-actions{display:flex; gap:8px; margin-top:4px;}
+  .btn{
+    border-radius:10px; padding:9px 14px; font-size:13.5px; font-weight:600; cursor:pointer; border:1px solid transparent;
+    font-family:'IBM Plex Sans'; display:inline-flex; align-items:center; gap:6px; line-height:1.2;
+  }
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{background:var(--accent-strong);}
+  .btn-ghost{background:var(--surface-2); color:var(--ink); border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--border-strong);}
+  .btn-ghost.active{background:var(--accent-tint); border-color:var(--accent); color:var(--accent-ink);}
+  .btn:disabled{opacity:.45; cursor:not-allowed;}
+  .btn-sm{padding:6px 11px; font-size:12.5px; border-radius:8px;}
+
+  /* ---------- Module header ---------- */
+  .module-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px;
+  }
+  .module-title{display:flex; align-items:center; gap:12px;}
+  .plat-icon{width:38px; height:38px; border-radius:10px; flex:none; display:flex; align-items:center; justify-content:center; font-family:'Manrope'; font-weight:800; color:#fff; font-size:14px;}
+  .plat-icon.aws{background:var(--aws);}
+  .plat-icon.azure{background:var(--azure);}
+  .plat-icon.gcp{background:var(--gcp);}
+  .module-title h2{margin:0; font-size:20px;}
+  .module-title .sub{color:var(--ink-faint); font-size:12.5px; margin-top:2px;}
+  .tabgroup{display:flex; gap:6px; background:var(--surface-2); border:1px solid var(--border); border-radius:11px; padding:4px;}
+  .tabgroup button{
+    border:none; background:transparent; padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600;
+    color:var(--ink-soft); cursor:pointer;
+  }
+  .tabgroup button.active{background:var(--surface); color:var(--ink); box-shadow:var(--shadow);}
+
+  /* ---------- Learn (accordion) ---------- */
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;}
+  .acc-item{border-bottom:1px solid var(--border);}
+  .acc-item:last-child{border-bottom:none;}
+  .acc-head{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer; padding:16px 18px;
+    display:flex; align-items:center; gap:14px; color:var(--ink); font-family:'IBM Plex Sans';
+  }
+  .acc-num{
+    flex:none; width:28px; height:28px; border-radius:50%; background:var(--surface-2); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; font-family:'Manrope'; color:var(--ink-soft);
+  }
+  .acc-head.open .acc-num{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .acc-head-text{flex:1;}
+  .acc-head-text .t{font-weight:700; font-size:14.5px;}
+  .acc-head-text .s{font-size:12px; color:var(--ink-faint); margin-top:1px;}
+  .chevron{flex:none; transition:transform .18s ease; color:var(--ink-faint);}
+  .acc-head.open .chevron{transform:rotate(90deg); color:var(--accent);}
+  .acc-body{padding:0 18px 18px 60px; color:var(--ink-soft); font-size:13.5px; line-height:1.62;}
+  .acc-body p{margin:0 0 10px;}
+  .acc-body ul{margin:0 0 10px; padding-left:18px;}
+  .acc-body li{margin-bottom:5px;}
+  .field-list{display:flex; flex-direction:column; gap:6px; margin:10px 0;}
+  .field-row{display:flex; gap:8px; align-items:baseline; font-size:13px;}
+  .field-tag{
+    flex:none; font-family:'IBM Plex Mono'; font-size:11px; font-weight:600; background:var(--surface-2);
+    border:1px solid var(--border); padding:1px 7px; border-radius:6px; color:var(--ink-soft);
+  }
+  .callout{
+    border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.55; margin:12px 0 0;
+    border:1px solid var(--warn); background:var(--warn-tint); color:var(--ink);
+  }
+  .callout.good{border-color:var(--good); background:var(--good-tint);}
+  .callout b{font-weight:700;}
+  .source-note{font-size:11.5px; color:var(--ink-faint); margin-top:14px; padding:0 18px 16px;}
+
+  /* ---------- Prereqs / mistakes / primer blocks ---------- */
+  .info-block{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px 20px; margin-bottom:16px;}
+  .info-block h4{margin:0 0 4px; font-size:14.5px; display:flex; align-items:center; gap:8px;}
+  .info-block .sub{font-size:12px; color:var(--ink-faint); margin:0 0 12px;}
+  .check-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;}
+  .check-list li{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.5; color:var(--ink-soft);}
+  .check-list li svg{flex:none; margin-top:2px; color:var(--accent);}
+  .mistake-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .mistake-list li{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.55; color:var(--ink-soft); padding-bottom:10px; border-bottom:1px dashed var(--border);}
+  .mistake-list li:last-child{border-bottom:none; padding-bottom:0;}
+  .mistake-list .x{flex:none; width:20px; height:20px; border-radius:50%; background:var(--bad-tint); color:var(--bad); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; margin-top:1px;}
+  .mistake-list b{color:var(--ink);}
+
+  /* ---------- Home: start-here / glossary / cheat sheet ---------- */
+  .starthere{
+    background:linear-gradient(155deg, var(--accent-tint), var(--surface)); border:1px solid var(--border);
+    border-radius:var(--radius); box-shadow:var(--shadow); padding:22px 24px; margin-bottom:24px;
+  }
+  .starthere-head{display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer;}
+  .starthere-head h2{margin:0; font-size:18px;}
+  .starthere-head .sub{font-size:12.5px; color:var(--ink-soft); margin-top:3px;}
+  .starthere-toggle{flex:none; font-size:12.5px; font-weight:700; color:var(--accent-ink); display:flex; align-items:center; gap:5px;}
+  .starthere-toggle svg{transition:transform .18s ease;}
+  .starthere.collapsed .starthere-toggle svg{transform:rotate(-90deg);}
+  .starthere-body{margin-top:18px; display:flex; flex-direction:column; gap:20px;}
+  .starthere.collapsed .starthere-body{display:none;}
+  .starthere-primer p{font-size:13.5px; line-height:1.65; color:var(--ink-soft); margin:0 0 10px;}
+  .starthere-primer p:last-child{margin-bottom:0;}
+  .glossary-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 20px;}
+  @media (max-width:640px){.glossary-grid{grid-template-columns:1fr;}}
+  .gloss-item dt{font-family:'IBM Plex Mono'; font-weight:600; font-size:12.5px; color:var(--accent-ink); margin-bottom:2px;}
+  .gloss-item dd{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.5;}
+  .cheat-table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:10px;}
+  table.cheat-table{width:100%; border-collapse:collapse; font-size:12.5px; min-width:640px;}
+  table.cheat-table th{
+    text-align:left; padding:9px 12px; background:var(--surface-2); font-weight:700; color:var(--ink-soft);
+    border-bottom:1px solid var(--border); white-space:nowrap; position:sticky; top:0;
+  }
+  table.cheat-table td{padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--ink);}
+  table.cheat-table tr:last-child td{border-bottom:none;}
+  table.cheat-table td.concept{font-weight:700; color:var(--ink-soft); white-space:nowrap;}
+  .cloud-th{display:flex; align-items:center; gap:6px;}
+  .cloud-dot{width:8px; height:8px; border-radius:50%; flex:none;}
+  .cloud-dot.aws{background:var(--aws);} .cloud-dot.azure{background:var(--azure);} .cloud-dot.gcp{background:var(--gcp);}
+  .start-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
+
+  /* ---------- Practice wizard ---------- */
+  .wizard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px;}
+  .steps-track{display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap;}
+  .step-dot{
+    flex:1; min-width:26px; height:6px; border-radius:4px; background:var(--surface-3); position:relative;
+  }
+  .step-dot.active{background:var(--accent);}
+  .step-dot.done{background:var(--accent-strong);}
+  .step-label-row{display:flex; justify-content:space-between; margin-bottom:4px;}
+  .step-kicker{font-size:11.5px; color:var(--ink-faint); font-weight:600; letter-spacing:.03em;}
+  .step-kicker b{color:var(--accent-ink);}
+  .step-title{font-size:19px; margin:2px 0 4px;}
+  .step-help{color:var(--ink-soft); font-size:13px; margin:0 0 18px; line-height:1.5;}
+
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:640px){.form-grid{grid-template-columns:1fr;}}
+  .form-grid.single{grid-template-columns:1fr;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:12.5px; font-weight:600; color:var(--ink-soft); display:flex; gap:6px; align-items:baseline;}
+  .field label .req{color:var(--bad); font-weight:700;}
+  .field .hint{font-size:11.5px; color:var(--ink-faint); margin-top:-2px;}
+  .field input[type=text],.field input[type=number],.field input[type=date],.field input[type=email],.field select,.field textarea{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:9px 11px; font-size:13.5px;
+    color:var(--ink); width:100%; font-family:'IBM Plex Sans';
+  }
+  .field textarea{font-family:'IBM Plex Sans'; min-height:64px; resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent); background:var(--surface);}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--bad);}
+  .field .err{font-size:11.5px; color:var(--bad); display:none;}
+  .field.invalid .err{display:block;}
+
+  .radio-group,.check-group{display:flex; flex-direction:column; gap:8px;}
+  .radio-opt,.check-opt{
+    display:flex; align-items:flex-start; gap:9px; padding:10px 12px; border:1px solid var(--border); border-radius:9px;
+    background:var(--surface-2); cursor:pointer; font-size:13px;
+  }
+  .radio-opt:hover,.check-opt:hover{border-color:var(--border-strong);}
+  .radio-opt input,.check-opt input{margin-top:2px; flex:none;}
+  .radio-opt .t,.check-opt .t{font-weight:600;}
+  .radio-opt .s,.check-opt .s{color:var(--ink-faint); font-size:12px; margin-top:1px;}
+
+  .tier-table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+  .tier-table th{text-align:left; font-size:11.5px; color:var(--ink-faint); font-weight:600; padding:4px 8px;}
+  .tier-table td{padding:4px 8px;}
+  .tier-table input{width:100%;}
+
+  .wizard-nav{display:flex; justify-content:space-between; margin-top:22px; padding-top:16px; border-top:1px solid var(--border);}
+
+  .summary-card{background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:16px 18px;}
+  .summary-row{display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--border); font-size:13px;}
+  .summary-row:last-child{border-bottom:none;}
+  .summary-row .k{color:var(--ink-faint);}
+  .summary-row .v{font-weight:600; text-align:right; max-width:60%;}
+  .success-box{
+    display:flex; gap:12px; align-items:flex-start; background:var(--good-tint); border:1px solid var(--good);
+    border-radius:12px; padding:14px 16px; margin-bottom:16px;
+  }
+  .success-box svg{flex:none; color:var(--good); margin-top:1px;}
+  .success-box .t{font-weight:700; font-size:14px;}
+  .success-box .s{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+
+  .buyer-outcome{border-radius:12px; padding:16px 18px; margin-top:10px; border:1px solid var(--border);}
+  .buyer-outcome.qualified{background:var(--good-tint); border-color:var(--good);}
+  .buyer-outcome.routed{background:var(--warn-tint); border-color:var(--warn);}
+
+  /* ---------- Quiz ---------- */
+  .quiz-opt{
+    display:flex; align-items:flex-start; gap:10px; padding:11px 13px; border:1px solid var(--border); border-radius:9px;
+    background:var(--surface-2); cursor:pointer; font-size:13.5px; margin-bottom:8px;
+  }
+  .quiz-opt:hover{border-color:var(--border-strong);}
+  .quiz-opt input{margin-top:2px; flex:none;}
+  .quiz-opt.correct{background:var(--good-tint); border-color:var(--good);}
+  .quiz-opt.incorrect{background:var(--bad-tint); border-color:var(--bad);}
+  .quiz-opt .mark{margin-left:auto; font-size:11.5px; font-weight:700; flex:none;}
+  .quiz-opt.correct .mark{color:var(--good);}
+  .quiz-opt.incorrect .mark{color:var(--bad);}
+  .quiz-explain{
+    margin-top:12px; padding:12px 14px; border-radius:10px; font-size:13px; line-height:1.55;
+    background:var(--surface-2); border:1px solid var(--border);
+  }
+  .quiz-explain.good{background:var(--good-tint); border-color:var(--good);}
+  .quiz-explain.bad{background:var(--bad-tint); border-color:var(--bad);}
+  .quiz-progress{font-size:11.5px; color:var(--ink-faint); font-weight:600; margin-bottom:4px;}
+  .score-ring-wrap{display:flex; flex-direction:column; align-items:center; gap:6px; padding:18px 0 8px;}
+  .score-big{font-family:'Manrope'; font-weight:800; font-size:40px;}
+  .score-sub{color:var(--ink-soft); font-size:13px;}
+  .quiz-review-item{padding:12px 0; border-bottom:1px solid var(--border); font-size:13px;}
+  .quiz-review-item:last-child{border-bottom:none;}
+  .quiz-review-item .q{font-weight:700; margin-bottom:4px;}
+  .quiz-review-item .a{color:var(--ink-soft); line-height:1.5;}
+  .quiz-review-item .tag{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+    padding:2px 7px; border-radius:999px; margin-right:8px; vertical-align:middle;
+  }
+  .quiz-review-item .tag.good{background:var(--good-tint); color:var(--good);}
+  .quiz-review-item .tag.bad{background:var(--bad-tint); color:var(--bad);}
+  .quiz-badge{
+    display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:999px;
+    background:var(--surface-2); border:1px solid var(--border); color:var(--ink-faint);
+  }
+  .quiz-badge.passed{background:var(--good-tint); border-color:var(--good); color:var(--good);}
+
+  footer.foot{text-align:center; color:var(--ink-faint); font-size:11.5px; padding:30px 0 10px;}
+
+  .install-btn{display:none;}
+  .install-btn.show{display:inline-flex;}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand" id="brandHome" role="button" tabindex="0" aria-label="Go home">
+      <div class="mark">PO</div>
+      <div class="name">Private Offer Academy<small>Marketplace Associate training</small></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="progress-chip">
+      <svg class="ring" viewBox="0 0 36 36" id="progressRing">
+        <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--surface-3)" stroke-width="4"></circle>
+        <circle id="progressArc" cx="18" cy="18" r="15.5" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="97.4" stroke-dashoffset="97.4" transform="rotate(-90 18 18)"></circle>
+      </svg>
+      <span id="progressText">0 / 4 practiced</span>
+    </div>
+    <button class="home-btn install-btn" id="installBtn" type="button">Install app</button>
+    <button class="home-btn" id="homeBtn">Home</button>
+  </div>
+
+  <!-- ============ HOME VIEW ============ -->
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div class="eyebrow">CPPO &amp; private offer training</div>
+      <h1>Create your first Private Offer, correctly.</h1>
+      <p>Walk through how offers actually get built in AWS Marketplace (standard and Express), Microsoft Partner Center, and Google Cloud Marketplace — then practice by filling in a live offer form for each one. Nothing here submits a real offer; it's a safe sandbox for new Marketplace Associates.</p>
+    </div>
+    <div class="starthere" id="startHere">
+      <div class="starthere-head" id="startHereToggle">
+        <div>
+          <h2>New to private offers? Start here.</h2>
+          <div class="sub">A 2-minute primer, a glossary of the jargon you'll hit right away, and a cheat sheet mapping AWS ↔ Azure ↔ GCP terms.</div>
+        </div>
+        <div class="starthere-toggle"><span id="startHereToggleLabel">Hide</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="starthere-body" id="startHereBody"></div>
+    </div>
+    <div class="grid-cards" id="homeCards"></div>
+  </section>
+
+  <!-- ============ MODULE VIEW (shared shell) ============ -->
+  <section class="view" id="view-module" hidden>
+    <div class="module-head">
+      <div class="module-title">
+        <div class="plat-icon" id="modIcon"></div>
+        <div>
+          <h2 id="modTitle"></h2>
+          <div class="sub" id="modSub"></div>
+        </div>
+      </div>
+      <div class="tabgroup">
+        <button id="tabLearn" class="active">Learn</button>
+        <button id="tabPractice">Practice</button>
+        <button id="tabQuiz">Quiz</button>
+      </div>
+    </div>
+    <div id="modLearn"></div>
+    <div id="modPractice" hidden></div>
+    <div id="modQuiz" hidden></div>
+  </section>
+
+  <footer class="foot">Training sandbox only — always confirm current steps in AWS Partner Central, Microsoft Partner Center, and the Google Cloud Producer Portal before working a live deal.<br>Independently produced training material. Not affiliated with, sponsored by, or endorsed by Amazon Web Services, Microsoft, or Google. AWS, Azure, and Google Cloud are trademarks of their respective owners, referenced here solely to describe their publicly documented processes.<br>&copy; 2026 Larson Marketplace Consulting. All rights reserved.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- persistence (per-viewer only) ---------------- */
+var STORE_KEY = "poa_progress_v1";
+function loadProgress(){
+  try{
+    var raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveProgress(p){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }catch(e){}
+}
+var progress = loadProgress();
+
+function markPracticed(key){
+  progress[key] = Object.assign({}, progress[key], { practiced:true, at: Date.now() });
+  saveProgress(progress);
+  renderHomeCards();
+  updateProgressRing();
+}
+function markQuizResult(key, score, total){
+  var passed = score >= Math.ceil(total*0.8);
+  var prev = progress[key] || {};
+  var best = prev.quizBest !== undefined ? Math.max(prev.quizBest, score) : score;
+  progress[key] = Object.assign({}, prev, { quizBest: best, quizTotal: total, quizPassed: prev.quizPassed || passed, at: Date.now() });
+  saveProgress(progress);
+  renderHomeCards();
+}
+
+/* ---------------- module data ---------------- */
+var MODULES = {
+  "aws-standard": {
+    plat:"aws", icon:"AWS", label:"AWS Marketplace",
+    title:"Private Offer",
+    short:"Standard &amp; Channel Partner Private Offers (CPPO)",
+    desc:"Build a negotiated, custom-priced offer for one or more AWS accounts, or resell an ISV's product under a Channel Partner Private Offer (CPPO).",
+    prereqs:[
+      "Access to AWS Partner Central with permission to create private offers",
+      "The product already has at least one active public listing on AWS Marketplace",
+      "The buyer's 12-digit AWS account ID(s) — ask your buyer or their AE ahead of time",
+      "For a CPPO: an active resale authorization from the ISV, already in place"
+    ],
+    mistakes:[
+      ["Picking the wrong product at step 1", "It can't be changed after the offer is created — you'd have to clone the offer into a new one instead."],
+      ["Reading the expiration date in local time", "It's evaluated at 23:59:59 UTC. An offer you think expires “tonight” may already be gone for a buyer in another timezone."],
+      ["Sending the offer link right after clicking Create", "Publishing runs through the Catalog API and can take up to an hour — the buyer won't see anything yet if you send it immediately."],
+      ["Reusing the public EULA on a genuinely negotiated deal", "If the terms were actually negotiated, that belongs in custom legal terms or the SCMP — not the public EULA, which reflects list-price terms."]
+    ],
+    learn:[
+      {t:"Start the offer", s:"AWS Partner Central → Private offers → Create private offer",
+       body:"<p>Sign in to <b>AWS Partner Central</b>, open <b>Private offers</b>, and choose <b>Create private offer</b>. Pick your offer type, product type, and the specific product — the product can't be changed once the offer exists, so confirm it first.</p><p>If you're a channel partner reselling on behalf of a software vendor, choose <b>Create a Channel Partner Private Offer (CPPO)</b> instead of an offer for your own product, then select the ISV, the product, and the resale authorization that permits you to sell it. Without an active authorization, CPPO won't be available.</p>",
+       fields:[["Offer type","New offer / CPPO"],["Product","Locked after creation"],["ISV + authorization","CPPO only"]]},
+      {t:"Offer information", s:"Name, purpose, expiration",
+       body:"<p>Give the offer a clear internal name and detail, state the <b>offer purpose</b> — a new customer, a renewal of an existing AWS Marketplace agreement, or a customer migrating an off-Marketplace agreement onto AWS Marketplace — and set the <b>expiration date</b> (offer becomes void at 23:59:59 UTC that day).</p>",
+       fields:[["Offer name","Internal + buyer-visible"],["Offer purpose","New / Renewal / Migration"],["Expiration date","UTC end-of-day"]]},
+      {t:"Pricing &amp; duration", s:"Model, term, amount, currency",
+       body:"<p>Choose the pricing model (contract, usage-based, or contract with a consumption component), the contract or usage duration, the price, and the payment schedule. Private offers can be priced in non-USD currencies — public listings and pure consumption pricing stay in USD — so if you quote non-USD, make sure the buyer's account region supports it and your disbursement preferences are configured.</p>",
+       fields:[["Pricing model","Contract / usage / hybrid"],["Duration","Months or custom"],["Currency","Private offers allow non-USD"],["Payment schedule","Upfront / installments"]]},
+      {t:"Add buyers", s:"Up to 24 AWS account IDs",
+       body:"<p>Enter the AWS account ID for each buyer this offer extends to — up to 24 accounts on one offer. Every buyer account must be in a region that supports the currency you picked.</p>"},
+      {t:"Legal terms", s:"EULA, standard contract, or custom",
+       body:"<p>Pick one: reuse your <b>public offer's EULA</b>, use the <b>AWS Standard Contract for Marketplace (SCMP)</b>, or upload <b>custom legal terms</b> — up to five files (terms, SOW, bill of materials, pricing sheet, addenda), which AWS merges into a single document the buyer accepts.</p>"},
+      {t:"Auto-renewal (optional)", s:"Uplift, cap, deadlines",
+       body:"<p>Decide whether the agreement renews automatically with no price change, a fixed-percentage uplift, or a percentage range the buyer can adjust before a deadline — or doesn't renew at all. Set a renewal maximum (a number of cycles, or unlimited) and the decision deadline buyers must respond by.</p>"},
+      {t:"Review &amp; create", s:"Publish and notify buyers",
+       body:"<p>Check every section on the review page, then choose <b>Create offer</b>. AWS validates and publishes through the Marketplace Catalog API — this can take up to an hour — after which it appears on the buyer's <b>Available private offers</b> tab. Copy the offer URL from <b>Actions → Copy Offer URL</b> if you need to send it directly.</p>",
+       callout:"Draft offers don't count against retention limits, so it's fine to start one and come back — nothing is sent until you choose Create offer."}
+    ],
+    quiz:[
+      {q:"A channel partner wants to resell an ISV's product to a customer under a CPPO. What do they need to select at offer creation that a standard offer doesn't require?", options:["A different pricing model","The ISV and a valid resale authorization","A longer expiration date","A public offer EULA"], correct:1,
+       explain:"CPPO requires selecting the ISV, the product, and an active resale authorization — without one, the CPPO path isn't even available."},
+      {q:"How many buyer AWS accounts can be added to a single private offer?", options:["1","5","24","Unlimited"], correct:2,
+       explain:"Up to 24 AWS account IDs can be added as buyers on one private offer."},
+      {q:"Which currencies can a private offer be priced in?", options:["USD only","Non-USD is allowed, unlike public listings and pure consumption pricing","Any currency, including for consumption pricing","Only the buyer's local currency"], correct:1,
+       explain:"Private offers can use non-USD currencies; public listings and pure consumption pricing are USD-only."},
+      {q:"What are the three legal terms options for a private offer?", options:["Public offer EULA, SCMP, or custom terms (up to 5 files)","Only a custom PDF","A verbal agreement plus a purchase order","SCMP only, always"], correct:0,
+       explain:"Sellers choose between reusing the public EULA, AWS's Standard Contract for Marketplace (SCMP), or uploading custom terms (up to 5 files, merged into one document)."},
+      {q:"After you choose “Create offer,” how long can AWS take to validate and publish it?", options:["Instantly","Up to 1 hour, via the Marketplace Catalog API","24–48 hours","It only publishes after the buyer pays"], correct:1,
+       explain:"Publishing runs through the Marketplace Catalog API and can take up to an hour before the buyer sees it under Available private offers."},
+      {q:"What is the “renewal decision deadline” for?", options:["The date the offer itself expires","The last day the buyer can change their auto-renewal choice","The date pricing goes live","The deadline for the seller to cancel the offer"], correct:1,
+       explain:"It's the last day the buyer has to finalize or change their renewal decision — separate from the offer's own expiration date."}
+    ]
+  },
+  "aws-express": {
+    plat:"aws", icon:"AWS", label:"AWS Marketplace",
+    title:"Express Private Offer",
+    short:"Self-service, rate-card-driven discounting",
+    desc:"Instead of a seller manually drafting every offer, you pre-configure a rate card once — the buyer requests a discount themselves and AWS generates the offer automatically if they qualify.",
+    prereqs:[
+      "Everything a standard private offer needs, plus:",
+      "An active SaaS contract listing, or a SaaS contract with pay-as-you-go",
+      "Completed onboarding for the “Request Private Offer” button in Partner Central",
+      "IAM permissions: AWSMarketplaceSellerFullAccess, or an equivalent custom policy",
+      "A rate card already configured — Express can't run until one exists"
+    ],
+    mistakes:[
+      ["Trying to combine dimension-based and TCV-based tiers", "Those two can't be combined with each other — each can only pair with a buyer-profile rate card, not with each other."],
+      ["Assuming stacked discounts add up", "Combined rate cards multiply, not add — a 10% tier plus a 5% tier works out to about 14.5%, not 15%."],
+      ["Setting the Global TCV Maximum too low", "Real deals above it get routed to your sales-assisted process instead of auto-approving — set it deliberately, not as an afterthought."],
+      ["Expecting to discount consumption components or duration", "Neither is supported — consumption components on CCP products and duration-based discounting are both explicitly excluded."]
+    ],
+    learn:[
+      {t:"How it's different", s:"Buyer-initiated, rules-driven",
+       body:"<p>A standard private offer is created by the seller for a named buyer. An <b>Express Private Offer</b> flips that: the buyer clicks <b>Get Express Private Offer</b> on your listing, answers a short qualification flow, and — if they meet the rules you configured in advance — receives an instant, automatically generated offer with the applicable discount already applied. Buyers who don't qualify are routed to your normal sales-assisted process instead of being auto-approved.</p>"},
+      {t:"Eligibility to enable it", s:"Listing type, permissions",
+       body:"<p>Your product needs an active SaaS contract listing (or SaaS contract with pay-as-you-go), and you must complete onboarding for the <b>Request Private Offer</b> button. Whoever configures it needs <code>AWSMarketplaceFullAccess</code> or <code>AWSMarketplaceSellerFullAccess</code>, or a custom policy covering <code>DescribeChangeSet</code>, <code>ListChangeSets</code>, <code>StartChangeSet</code>, <code>ListEntities</code>, and <code>DescribeEntity</code>.</p>"},
+      {t:"Choose a rate card type", s:"Dimension, TCV, or buyer profile",
+       body:"<p>Rate cards come in three flavors, and you can combine some of them:</p><ul><li><b>Dimension-based</b> — discount tiers keyed to quantity of a specific pricing dimension.</li><li><b>TCV-based</b> — discount tiers keyed to total contract value.</li><li><b>Buyer-profile-based</b> — up to five natural-language qualifying questions (never protected characteristics) that determine eligibility.</li></ul><p>Dimension-based and TCV-based can each pair with buyer-profile, but <b>dimension-based and TCV-based cannot be combined with each other</b>.</p>",
+       callout:"Combined rate cards multiply, they don't add — a 10% tier stacked with a 5% tier yields roughly 14.5%, not 15%."},
+      {t:"Set global controls", s:"TCV ceiling, discount cap",
+       body:"<p>Set a <b>Global TCV Maximum</b> — deals above it route to your sales-assisted workflow instead of auto-approving — and a <b>Maximum Discount Cap</b> across every combined rate card (you can set this to 0% to allow qualification without any discount). Quantities that fall outside any configured tier automatically get a 0% discount; duration-based discounting and consumption components on CCP products can't be discounted at all.</p>"},
+      {t:"The buyer's experience", s:"Instant offer or sales hand-off",
+       body:"<p>The buyer clicks the button on your listing, an AI-guided flow asks any buyer-profile questions and checks quantity or contract value against your rate card, and qualified buyers get an instantly generated offer (named to identify it as an Express Private Offer) that then behaves exactly like a standard private offer for acceptance and billing. Anyone who exceeds your TCV maximum or fails a qualifier is redirected to talk to your sales team.</p>"}
+    ],
+    quiz:[
+      {q:"What actually triggers an Express Private Offer?", options:["The seller creates it manually for a named buyer","The buyer clicks “Get Express Private Offer” on the listing", "AWS generates one automatically every quarter","A support ticket the buyer files"], correct:1,
+       explain:"Unlike a standard private offer, Express is buyer-initiated — they click the button and go through a self-service qualification flow."},
+      {q:"Which two rate card bases can NOT be combined with each other?", options:["Dimension-based and buyer-profile","TCV-based and buyer-profile","Dimension-based and TCV-based","None — all three can always combine"], correct:2,
+       explain:"Dimension-based and TCV-based can't be combined with each other; each can pair with buyer-profile separately."},
+      {q:"A 10% discount tier stacks with a 5% discount tier on a combined rate card. What's the total discount?", options:["15%","14.5%","10%, the higher tier wins","5%, the lower tier wins"], correct:1,
+       explain:"Combined rate cards multiply rather than add — 10% × 5% works out to roughly 14.5%, not 15%."},
+      {q:"A buyer's requested deal exceeds your configured Global TCV Maximum. What happens?", options:["The offer auto-approves anyway at 0% discount","The request is automatically rejected with no follow-up","It routes to your sales-assisted workflow instead of auto-approving","AWS emails the seller for manual approval within 24 hours"], correct:2,
+       explain:"Exceeding the TCV maximum routes the buyer to sales-assisted — it's not an auto-approval or a hard rejection."},
+      {q:"Which of these CAN be discounted through an Express Private Offer rate card?", options:["Consumption components on a CCP product","Duration-based discounts","A dimension quantity tier","Buyer's payment method"], correct:2,
+       explain:"Dimension quantity tiers are a supported basis. Consumption components on CCP products and duration-based discounting are both explicitly unsupported."},
+      {q:"What must be true about a product before Express Private Offers can be enabled for it?", options:["It must be a BYOL listing","It must have an active SaaS contract listing (or SaaS contract with pay-as-you-go)","It must already have 10+ private offers","It must be free-tier eligible"], correct:1,
+       explain:"Express Private Offers require an active SaaS contract listing, or a SaaS contract with pay-as-you-go — plus completed onboarding for the button itself."}
+    ]
+  },
+  "azure": {
+    plat:"azure", icon:"AZ", label:"Microsoft Partner Center",
+    title:"Private Offer",
+    short:"Direct &amp; multiparty (via channel partner) offers in Partner Center",
+    desc:"Give one customer negotiated pricing on a Marketplace SaaS, Azure App, or VM offer through Partner Center — sent directly, or through a reselling channel partner on a multiparty offer.",
+    prereqs:[
+      "A Marketplace account in Partner Center, enrolled in the Marketplace program, with a Developer, Manager, or Owner role",
+      "A publicly transactable offer already published",
+      "The customer's Billing Account ID — ask them to pull it from Cost Management + Billing → Properties in the Azure portal",
+      "For a multiparty offer: the channel partner's Marketplace Seller ID, and confirmation they have a completed tax profile"
+    ],
+    mistakes:[
+      ["Submitting before double-checking everything", "There's no edit after submission — only withdraw (while still Pending Acceptance) and recreate."],
+      ["Currency mismatch on absolute pricing", "The customer's market currency has to match their billing account currency for absolute pricing — percentage-discount offers don't have this restriction."],
+      ["Assuming Microsoft emails the customer", "It doesn't — you have to send the offer link to the customer yourself."],
+      ["Trying to withdraw a multiparty offer that's Pending acceptance", "Only the channel partner can withdraw at that stage — the ISV can only withdraw while it's still Pending partner action."]
+    ],
+    learn:[
+      {t:"Start the offer", s:"Marketplace offers → Private offers → Customers",
+       body:"<p>In <b>Partner Center</b>, open the <b>Marketplace offers</b> workspace, go to <b>Private offers → Customers</b>, and select <b>+ New private offer</b>. Name it clearly — the name is visible to you in Partner Center and to the customer in the Azure portal.</p>"},
+      {t:"Direct, or through a channel partner?", s:"Customer private offer vs. multiparty private offer",
+       body:"<p>Before you configure anything, decide which relationship this deal actually has:</p><ul><li><b>Direct (customer private offer)</b> — you, the ISV, send the offer straight to the customer's billing account. No one else is involved.</li><li><b>Multiparty private offer</b> — a <b>channel partner</b> (an authorized reseller) sits between you and the customer. You still create the offer and set your wholesale price to the partner, but the partner then sets their own price to the customer and shares the link — the customer never sees your price, only the partner's.</li></ul><p>Multiparty offers live under a separate <b>Multiparty</b> tab in Private offers, and only support SaaS, Azure VM, Azure App, Azure Container, and Dragon Copilot offer types — professional services and hardware bundling aren't eligible.</p>",
+       fields:[["Customer private offer","ISV → customer, direct"],["Multiparty private offer","ISV → partner → customer"]]},
+      {t:"Pick the offer type", s:"Three structures",
+       body:"<p>Choose one: a <b>price adjustment</b> to an existing public plan (percentage discount or absolute price — works for SaaS, VMs, Azure Apps, containers); a brand-new <b>absolute-priced plan</b> for SaaS, professional services, or Dragon Copilot with its own plan ID; or custom pricing on a <b>VM software reservation</b>.</p>"},
+      {t:"Identify the customer", s:"Billing Account ID",
+       body:"<p>You need the customer's <b>Billing Account ID</b> — they can find it under Azure portal <b>Cost Management + Billing → Properties</b>, or you can export it via the private-offer precheck report. For absolute pricing, the customer's market currency has to match their billing account currency; percentage-discount offers have no currency restriction.</p>"},
+      {t:"Set the dates", s:"Start, end, accept-by",
+       body:"<p>Pricing can start on the date the customer <b>accepts</b>, or on the first of a <b>specific month</b> (UTC). Set an <b>end date</b> for when the customer must have purchased by, and an <b>accept-by date</b> for when they must agree to the terms.</p>"},
+      {t:"Configure pricing", s:"Depends on offer type",
+       body:"<p>Price-adjustment offers: add up to 10 offers/plans, pick offer-level or plan-level discounting, and enter either a percentage or an absolute price. New-plan offers: name the plan, choose flat-rate (1–120 months or 1–10 years, several billing frequencies) or per-user pricing with min/max seats. VM reservations: set duration, billing frequency, and per-vCPU-size unit pricing.</p>"},
+      {t:"Terms, renewal, notifications", s:"Optional but easy to miss",
+       body:"<p>You can attach a custom terms PDF (it still has to comply with the Microsoft Publisher Agreement), choose whether the deal renews into another private offer or falls back to the public offer, and list up to five notification emails plus a customer-visible <b>Prepared by</b> contact.</p>"},
+      {t:"If a partner is involved: the multiparty flow", s:"Three parties, three statuses",
+       body:"<p>On a multiparty offer you additionally enter the partner's <b>Marketplace Seller ID</b> (found in their Partner Center under Account settings → Identifiers → Publisher) — the partner must have a completed tax profile and be in an eligible country, and only one partner can be attached per offer.</p><p>Once you submit, the offer doesn't go straight to the customer — it moves through three statuses:</p><ul><li><b>Pending partner action</b> — the partner sets their own customer-facing price (separate from your wholesale price to them) and shares the offer link. They can also withdraw it here, which sends it back to you as a draft.</li><li><b>Pending acceptance</b> — the customer reviews and accepts in the Azure portal. You <b>cannot</b> withdraw once it reaches this status; only the partner can, up until the customer purchases.</li><li><b>Accepted</b> — locked; Microsoft calculates your payout from the partner price you set, visible in the Earnings dashboard.</li></ul>",
+       callout:"Choosing “new absolute-priced plan” on a multiparty offer creates a new plan ID, same as direct — if the product has metered dimensions, emit usage against that new plan ID, not the public one."},
+      {t:"Review &amp; submit", s:"Locked after submission",
+       body:"<p>Once you submit, the offer cannot be edited — only withdrawn while still <b>Pending Acceptance</b>, or cancelled via a support ticket after acceptance. The customer accepts it in the Azure portal's Private Offer Management pane, or through a link you send them; Microsoft does not email them automatically, so tell them yourself.</p>",
+       callout:"Review carefully before submitting — there's no in-place edit, only withdraw-and-recreate."}
+    ],
+    quiz:[
+      {q:"On a multiparty private offer, who sets the price the customer actually pays?", options:["The ISV, always","The channel partner", "Microsoft, based on a fixed formula","The customer negotiates it directly in the Azure portal"], correct:1,
+       explain:"The ISV sets a wholesale price to the partner; the partner then sets their own separate price to the customer."},
+      {q:"Where does a customer find their Billing Account ID?", options:["In their AWS console","Azure portal → Cost Management + Billing → Properties","In the offer email from Microsoft","It's assigned by the ISV"], correct:1,
+       explain:"Customers can find it under Cost Management + Billing → Properties in the Azure portal, or via the private-offer precheck export."},
+      {q:"Can a submitted private offer be edited afterward?", options:["Yes, any time before it expires","No — it can only be withdrawn (while Pending Acceptance) or recreated","Yes, but only the pricing fields","Only Microsoft support can edit it"], correct:1,
+       explain:"Offers lock after submission. The only recourse is withdrawing before acceptance (or a support ticket after acceptance) and creating a new one."},
+      {q:"On a multiparty offer, once the offer reaches “Pending acceptance,” who can still withdraw it?", options:["Both the ISV and the partner","Only the ISV","Only the partner, up until the customer purchases","No one — it's locked"], correct:2,
+       explain:"The ISV can only withdraw while it's “Pending partner action.” Once it's Pending acceptance, only the partner can withdraw it, until the customer purchases."},
+      {q:"Which offer types are NOT eligible for multiparty private offers?", options:["SaaS and Azure VM","Professional services and hardware bundling","Azure Container and Dragon Copilot","Azure App"], correct:1,
+       explain:"Multiparty supports SaaS, Azure VM, Azure App, Azure Container, and Dragon Copilot — professional services and hardware bundling are excluded."},
+      {q:"For a new absolute-priced SaaS plan with metered dimensions, which plan ID should be used to emit usage?", options:["The original public plan ID","The new plan ID created by the private offer","Either one works interchangeably","Usage can't be metered on absolute-priced plans"], correct:1,
+       explain:"An absolute-priced new plan gets its own unique plan ID — usage must be emitted against that new ID, not the public one."}
+    ]
+  },
+  "gcp": {
+    plat:"gcp", icon:"GCP", label:"Google Cloud Marketplace",
+    title:"Private Offer",
+    short:"Producer Portal offers to one customer",
+    desc:"Send a customer a custom-priced plan through the Producer Portal; they accept it against their own Cloud Billing account.",
+    prereqs:[
+      "The product already integrated and listed on Cloud Marketplace",
+      "The customer's Cloud Billing account ID in hand",
+      "Appropriate IAM roles — Project Editor or Commerce Producer roles",
+      "For SaaS products: entitlements already configured for usage tracking"
+    ],
+    mistakes:[
+      ["Not confirming entitlements before going live", "Usage-based billing won't report correctly if entitlements aren't configured ahead of time."],
+      ["Assuming a default EULA applies automatically", "You still choose it explicitly — standard or custom — as its own step in the flow."],
+      ["Thinking the private offer changes the public listing", "It doesn't — pricing and terms here are customer-specific and never touch the public listing."],
+      ["Building offers one at a time in the UI at real volume", "The Commerce Producer API supports programmatic creation — worth it once you're past a handful of offers a week."]
+    ],
+    learn:[
+      {t:"Open the Producer Portal", s:"Private Offers → Create offer",
+       body:"<p>Go to the <b>Producer Portal</b>'s <b>Private Offers</b> page and choose <b>Create offer</b>. You'll need the product already listed on Cloud Marketplace and the customer's <b>Cloud Billing account ID</b> in hand before you start.</p>"},
+      {t:"Add product &amp; customer details", s:"Which product, which customer",
+       body:"<p>Select the specific product (and SKU/plan if it has more than one) and identify the customer by their Cloud Billing account. For SaaS products with usage-based components, confirm entitlements are configured so consumption reports correctly once the offer is active.</p>"},
+      {t:"Configure pricing", s:"Custom plan for this customer",
+       body:"<p>Set up the pricing model and term for this customer specifically — flat rate, percentage discount off list, or a tiered structure, depending on what your listing supports — and the offer's duration.</p>"},
+      {t:"Specify the EULA", s:"Default or custom terms",
+       body:"<p>Use your product's standard marketplace EULA, or attach custom terms for this deal.</p>"},
+      {t:"Review &amp; publish", s:"Sent to the customer's account",
+       body:"<p>Review the four sections — product/customer, pricing, EULA, and the summary — then publish. The offer becomes visible to that customer against their Cloud Billing account for review and acceptance; you can also create and manage offers via the Commerce Producer API if you're automating this at volume.</p>"}
+    ],
+    quiz:[
+      {q:"Where do you create a private offer in Google Cloud Marketplace?", options:["Google Cloud Console billing page","The Producer Portal's Private Offers page","Cloud Marketplace public listing editor","Google Admin console"], correct:1,
+       explain:"Private offers are created from the Producer Portal's Private Offers page, via Create offer."},
+      {q:"What do you need from the customer before you can create the offer?", options:["Their Google Workspace admin email","Their Cloud Billing account ID","Their GCP support case number","Nothing — you just search their org name"], correct:1,
+       explain:"You need the customer's Cloud Billing account ID to identify and target the offer to them."},
+      {q:"What are the four sections of the GCP private offer flow?", options:["Product/customer, pricing, EULA, review & publish","Name, price, discount, expiration","Customer, contract, invoice, signature","Product, region, currency, tax"], correct:0,
+       explain:"The flow walks through adding product & customer details, configuring pricing, specifying the EULA, then review & publish."},
+      {q:"For a SaaS product with usage-based components, what should you confirm before the offer goes live?", options:["That the customer has a support plan","That entitlements are configured so consumption reports correctly","That the product has a public listing","That the EULA is notarized"], correct:1,
+       explain:"Entitlements need to be set up correctly so usage-based consumption reports properly once the private offer is active."},
+      {q:"Besides the Producer Portal UI, how else can offers be created and managed at volume?", options:["They can't — UI only","Via the Commerce Producer API","By emailing Google Cloud support","Through a CSV bulk upload only"], correct:1,
+       explain:"The Commerce Producer API supports programmatic creation and management, useful if you're automating this at scale."}
+    ]
+  }
+};
+
+var MODULE_ORDER = ["aws-standard","aws-express","azure","gcp"];
+
+/* ---------------- home cards ---------------- */
+function renderHomeCards(){
+  var el = document.getElementById("homeCards");
+  el.innerHTML = "";
+  MODULE_ORDER.forEach(function(key){
+    var m = MODULES[key];
+    var p = progress[key] || {};
+    var done = p.practiced;
+    var quizBadge = p.quizBest !== undefined ?
+      '<span class="quiz-badge'+(p.quizPassed?' passed':'')+'">'+(p.quizPassed?'✓ ':'')+'Quiz '+p.quizBest+'/'+p.quizTotal+'</span>' : '';
+    var card = document.createElement("div");
+    card.className = "card " + m.plat;
+    card.innerHTML =
+      '<div class="card-top">'+
+        '<span class="platform-badge '+m.plat+'">'+m.label+'</span>'+
+        '<span class="status-pill '+(done?'done':'')+'"><span class="dot"></span>'+(done?'Practiced':'Not started')+'</span>'+
+      '</div>'+
+      '<h3>'+m.title+'</h3>'+
+      '<p class="desc">'+m.desc+'</p>'+
+      (quizBadge ? '<div>'+quizBadge+'</div>' : '') +
+      '<div class="card-actions">'+
+        '<button class="btn btn-primary btn-open-learn" data-key="'+key+'">Learn the steps</button>'+
+        '<button class="btn btn-ghost btn-open-practice" data-key="'+key+'">Practice</button>'+
+        '<button class="btn btn-ghost btn-open-quiz" data-key="'+key+'">Quiz</button>'+
+      '</div>';
+    el.appendChild(card);
+  });
+  el.querySelectorAll(".btn-open-learn").forEach(function(b){
+    b.addEventListener("click", function(){ openModule(b.dataset.key, "learn"); });
+  });
+  el.querySelectorAll(".btn-open-practice").forEach(function(b){
+    b.addEventListener("click", function(){ openModule(b.dataset.key, "practice"); });
+  });
+  el.querySelectorAll(".btn-open-quiz").forEach(function(b){
+    b.addEventListener("click", function(){ openModule(b.dataset.key, "quiz"); });
+  });
+}
+
+function updateProgressRing(){
+  var n = MODULE_ORDER.filter(function(k){ return progress[k] && progress[k].practiced; }).length;
+  document.getElementById("progressText").textContent = n + " / 4 practiced";
+  var circumference = 2*Math.PI*15.5;
+  var arc = document.getElementById("progressArc");
+  arc.setAttribute("stroke-dasharray", circumference.toFixed(1));
+  arc.setAttribute("stroke-dashoffset", (circumference * (1 - n/4)).toFixed(1));
+}
+
+/* ---------------- navigation ---------------- */
+function showView(id){
+  document.querySelectorAll(".view").forEach(function(v){ v.hidden = (v.id !== id); });
+  window.scrollTo({top:0, behavior:"instant"});
+}
+function goHome(){ showView("view-home"); }
+
+var currentKey = null;
+function openModule(key, mode){
+  currentKey = key;
+  var m = MODULES[key];
+  document.getElementById("modIcon").className = "plat-icon " + m.plat;
+  document.getElementById("modIcon").textContent = m.icon;
+  document.getElementById("modTitle").innerHTML = m.label + " — " + m.title;
+  document.getElementById("modSub").innerHTML = m.short;
+  renderLearn(m);
+  renderPracticeIntro(key, m);
+  renderQuizIntro(key, m);
+  setModuleTab(mode || "learn");
+  showView("view-module");
+}
+
+function setModuleTab(mode){
+  var tabs = { learn:["tabLearn","modLearn"], practice:["tabPractice","modPractice"], quiz:["tabQuiz","modQuiz"] };
+  Object.keys(tabs).forEach(function(m){
+    var btn = document.getElementById(tabs[m][0]), pane = document.getElementById(tabs[m][1]);
+    var active = (m === mode);
+    btn.classList.toggle("active", active);
+    pane.hidden = !active;
+  });
+}
+
+/* ---------------- learn accordion ---------------- */
+function renderLearn(m){
+  var wrap = document.getElementById("modLearn");
+  var html = "";
+  if(m.prereqs){
+    html += '<div class="info-block">' +
+      '<h4>Before you start</h4>' +
+      '<div class="sub">Have these in hand — nothing below will work without them.</div>' +
+      '<ul class="check-list">' + m.prereqs.map(function(p){
+        return '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>'+p+'</span></li>';
+      }).join("") + '</ul>' +
+    '</div>';
+  }
+  html += '<div class="panel">';
+  m.learn.forEach(function(step, i){
+    html += '<div class="acc-item">'+
+      '<button class="acc-head'+(i===0?' open':'')+'" data-i="'+i+'">'+
+        '<span class="acc-num">'+(i+1)+'</span>'+
+        '<span class="acc-head-text"><span class="t">'+step.t+'</span><span class="s">'+step.s+'</span></span>'+
+        '<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      '</button>'+
+      '<div class="acc-body" style="'+(i===0?'':'display:none;')+'">'+
+        step.body +
+        (step.fields ? '<div class="field-list">'+step.fields.map(function(f){return '<div class="field-row"><span class="field-tag">'+f[0]+'</span><span>'+f[1]+'</span></div>';}).join("")+'</div>' : "") +
+        (step.callout ? '<div class="callout"><b>Watch out:</b> '+step.callout+'</div>' : "") +
+      '</div>'+
+    '</div>';
+  });
+  html += '</div><div class="source-note">Source: current AWS Marketplace, Microsoft Partner Center, and Google Cloud Marketplace partner documentation. Console screens change — verify field names before running a live deal.</div>';
+  if(m.mistakes){
+    html += '<div class="info-block" style="margin-top:16px;">' +
+      '<h4>Common first-timer mistakes</h4>' +
+      '<div class="sub">Things that trip up new Marketplace Associates specifically — not covered above.</div>' +
+      '<ul class="mistake-list">' + m.mistakes.map(function(x){
+        return '<li><span class="x">&times;</span><span><b>'+x[0]+'.</b> '+x[1]+'</span></li>';
+      }).join("") + '</ul>' +
+    '</div>';
+  }
+  wrap.innerHTML = html;
+  wrap.querySelectorAll(".acc-head").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var open = btn.classList.contains("open");
+      wrap.querySelectorAll(".acc-head").forEach(function(b){ b.classList.remove("open"); b.nextElementSibling.style.display="none"; });
+      if(!open){ btn.classList.add("open"); btn.nextElementSibling.style.display="block"; }
+    });
+  });
+}
+
+document.getElementById("tabLearn").addEventListener("click", function(){ setModuleTab("learn"); });
+document.getElementById("tabPractice").addEventListener("click", function(){ setModuleTab("practice"); });
+document.getElementById("tabQuiz").addEventListener("click", function(){ setModuleTab("quiz"); });
+document.getElementById("homeBtn").addEventListener("click", goHome);
+document.getElementById("brandHome").addEventListener("click", goHome);
+document.getElementById("brandHome").addEventListener("keydown", function(e){ if(e.key==="Enter") goHome(); });
+
+/* =====================================================================
+   PRACTICE WIZARDS
+   ===================================================================== */
+
+/* Persistent field store — each wizard step replaces the previous step's DOM entirely,
+   so any value that must be read from a later step (cross-step conditionals, the final
+   review) has to survive here rather than live only in the (now-removed) input element. */
+var FS = {};
+function clearPrefix(prefix){
+  Object.keys(FS).forEach(function(k){ if(k.indexOf(prefix+"_")===0) delete FS[k]; });
+}
+function captureField(el){
+  if(el.type === "radio"){
+    if(el.checked) FS[el.name] = el.value;
+  } else if(el.type === "checkbox"){
+    var key = el.dataset.group;
+    if(!key) return;
+    if(!FS[key]) FS[key] = [];
+    var arr = FS[key], i = arr.indexOf(el.value);
+    if(el.checked && i===-1) arr.push(el.value);
+    if(!el.checked && i>-1) arr.splice(i,1);
+  } else if(el.id){
+    FS[el.id] = el.value;
+  }
+}
+
+/* Clears a field's stale "required" error the moment it becomes valid, instead of only
+   re-checking on the next Continue/Next click (which left filled-in fields looking broken). */
+function liveClearInvalid(el){
+  var field = el.closest ? el.closest(".field") : null;
+  if(!field || !field.classList.contains("invalid")) return;
+  if(field.dataset.radio === "1"){
+    if(document.querySelector('input[name="'+field.dataset.fid+'"]:checked')) field.classList.remove("invalid");
+  } else if(field.dataset.checkgroup === "1"){
+    var need = parseInt(field.dataset.min,10);
+    var have = document.querySelectorAll('input[data-group="'+field.dataset.fid+'"]:checked').length;
+    if(have >= need) field.classList.remove("invalid");
+  } else if(el.value && el.value.trim()){
+    field.classList.remove("invalid");
+  }
+}
+
+function fieldHTML(f, prefix){
+  var id = prefix + "_" + f.id;
+  var stored = FS[id];
+  var val = (stored !== undefined) ? stored : (f.value||"");
+  var req = f.required ? '<span class="req">*</span>' : "";
+  var hint = f.hint ? '<div class="hint">'+f.hint+'</div>' : "";
+  var out = '<div class="field" data-fid="'+id+'" data-required="'+(f.required?1:0)+'">';
+  out += '<label for="'+id+'">'+f.label+' '+req+'</label>';
+  if(f.type === "select"){
+    out += '<select id="'+id+'">' + (f.placeholder ? '<option value=""'+(val===""?" selected":"")+'>'+f.placeholder+'</option>' : '') +
+      f.options.map(function(o){ return '<option value="'+o+'"'+(o===val?" selected":"")+'>'+o+'</option>'; }).join("") + '</select>';
+  } else if(f.type === "textarea"){
+    out += '<textarea id="'+id+'" placeholder="'+(f.placeholder||"")+'">'+val+'</textarea>';
+  } else {
+    out += '<input type="'+(f.type||"text")+'" id="'+id+'" placeholder="'+(f.placeholder||"")+'" value="'+val+'">';
+  }
+  out += hint + '<div class="err">This field is required.</div>' + '</div>';
+  return out;
+}
+
+function radioGroupHTML(f, prefix){
+  var id = prefix + "_" + f.id;
+  var stored = FS[id];
+  if(stored === undefined && f.preselectFirst && f.options.length){ stored = f.options[0].v; FS[id] = stored; }
+  var out = '<div class="field" data-fid="'+id+'" data-required="'+(f.required?1:0)+'" data-radio="1">';
+  out += '<label>'+f.label+' '+(f.required?'<span class="req">*</span>':'')+'</label>';
+  out += '<div class="radio-group">';
+  f.options.forEach(function(o){
+    var checked = stored !== undefined && stored === o.v;
+    out += '<label class="radio-opt"><input type="radio" name="'+id+'" value="'+o.v+'"'+(checked?" checked":"")+'>'+
+      '<span><span class="t">'+o.t+'</span>'+(o.s?'<span class="s"> — '+o.s+'</span>':'')+'</span></label>';
+  });
+  out += '</div><div class="err">Choose one option.</div></div>';
+  return out;
+}
+
+function checkGroupHTML(f, prefix){
+  var id = prefix + "_" + f.id;
+  if(FS[id] === undefined) FS[id] = [];
+  var stored = FS[id];
+  var out = '<div class="field" data-fid="'+id+'" data-required="'+(f.required?1:0)+'" data-checkgroup="1" data-min="'+(f.min||f.options.length)+'">';
+  out += '<label>'+f.label+' '+(f.required?'<span class="req">*</span>':'')+'</label>';
+  out += '<div class="check-group">';
+  f.options.forEach(function(o){
+    var checked = stored.indexOf(o.v) > -1;
+    out += '<label class="check-opt"><input type="checkbox" data-group="'+id+'" value="'+o.v+'"'+(checked?" checked":"")+'>'+
+      '<span><span class="t">'+o.t+'</span>'+(o.s?'<span class="s"> — '+o.s+'</span>':'')+'</span></label>';
+  });
+  out += '</div><div class="err">'+(f.errText||"Confirm every item to continue.")+'</div></div>';
+  return out;
+}
+
+function getVal(prefix, id){
+  var key = prefix+"_"+id;
+  if(FS[key] !== undefined) return FS[key];
+  var el = document.getElementById(key);
+  return el ? el.value : "";
+}
+function getRadio(prefix, id){
+  var key = prefix+"_"+id;
+  if(FS[key] !== undefined) return FS[key];
+  var el = document.querySelector('input[name="'+key+'"]:checked');
+  return el ? el.value : "";
+}
+function getChecks(prefix, id){
+  var key = prefix+"_"+id;
+  if(FS[key] !== undefined) return FS[key].length;
+  var els = document.querySelectorAll('input[data-group="'+key+'"]:checked');
+  return els.length;
+}
+function totalChecks(prefix, id){
+  return document.querySelectorAll('input[data-group="'+prefix+'_'+id+'"]').length;
+}
+
+function validateStep(container){
+  var ok = true;
+  container.querySelectorAll(".field").forEach(function(f){
+    if(f.dataset.required !== "1") return;
+    if(f.dataset.radio){
+      var name = f.dataset.fid;
+      var checked = container.querySelector('input[name="'+name+'"]:checked');
+      if(!checked){ f.classList.add("invalid"); ok = false; } else f.classList.remove("invalid");
+      return;
+    }
+    if(f.dataset.checkgroup){
+      var need = parseInt(f.dataset.min,10);
+      var have = container.querySelectorAll('input[data-group="'+f.dataset.fid+'"]:checked').length;
+      if(have < need){ f.classList.add("invalid"); ok = false; } else f.classList.remove("invalid");
+      return;
+    }
+    var input = container.querySelector("#"+f.dataset.fid);
+    if(!input || !input.value || !input.value.trim()){ f.classList.add("invalid"); ok = false; }
+    else f.classList.remove("invalid");
+  });
+  return ok;
+}
+
+/* ---- generic linear wizard engine ---- */
+function buildWizard(root, opts){
+  // opts: {prefix, steps:[{kicker,title,help,render(container,state), }], onFinish(state)}
+  var idx = 0;
+  var state = {};
+  root.addEventListener("input", function(e){
+    var t = e.target;
+    if(t && (t.tagName==="INPUT"||t.tagName==="SELECT"||t.tagName==="TEXTAREA")){ captureField(t); liveClearInvalid(t); }
+  });
+  root.addEventListener("change", function(e){
+    var t = e.target;
+    if(t && (t.tagName==="INPUT"||t.tagName==="SELECT"||t.tagName==="TEXTAREA")){ captureField(t); liveClearInvalid(t); }
+  });
+  function renderTrack(){
+    var track = '<div class="steps-track">' + opts.steps.map(function(_,i){
+      return '<div class="step-dot '+(i<idx?"done":(i===idx?"active":""))+'"></div>';
+    }).join("") + '</div>';
+    return track;
+  }
+  function renderStep(){
+    var step = opts.steps[idx];
+    root.innerHTML =
+      renderTrack() +
+      '<div class="step-label-row"><span class="step-kicker">'+opts.prefixLabel+' &nbsp;·&nbsp; Step <b>'+(idx+1)+'</b> of '+opts.steps.length+'</span></div>' +
+      '<h3 class="step-title">'+step.title+'</h3>' +
+      (step.help ? '<p class="step-help">'+step.help+'</p>' : '') +
+      '<div class="step-body"></div>' +
+      '<div class="wizard-nav">'+
+        '<button class="btn btn-ghost" id="wzBack">Back</button>'+
+        '<button class="btn btn-primary" id="wzNext">'+(idx===opts.steps.length-1?"Finish":"Continue")+'</button>'+
+      '</div>';
+    var body = root.querySelector(".step-body");
+    step.render(body, state);
+    root.querySelector("#wzBack").disabled = (idx===0);
+    root.querySelector("#wzBack").addEventListener("click", function(){ if(idx>0){ idx--; renderStep(); } });
+    root.querySelector("#wzNext").addEventListener("click", function(){
+      if(step.validate && !step.validate(body, state)) return;
+      if(idx < opts.steps.length-1){ idx++; renderStep(); }
+      else { opts.onFinish(state); }
+    });
+  }
+  renderStep();
+  return { reset: function(){ idx=0; state={}; renderStep(); } };
+}
+
+function summaryRows(rows){
+  return '<div class="summary-card">' + rows.map(function(r){
+    return '<div class="summary-row"><span class="k">'+r[0]+'</span><span class="v">'+(r[1]||"<i>—</i>")+'</span></div>';
+  }).join("") + '</div>';
+}
+
+function successBox(title, sub){
+  return '<div class="success-box">'+
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4l-4-4 1.4-1.4 2.6 2.6 6-6 1.4 1.4-7.4 7.4z" fill="currentColor"/></svg>'+
+    '<div><div class="t">'+title+'</div><div class="s">'+sub+'</div></div>'+
+  '</div>';
+}
+
+/* ---------------- Practice intro / router per module ---------------- */
+function renderPracticeIntro(key, m){
+  var pane = document.getElementById("modPractice");
+  pane.innerHTML = '<div id="wizardHost"></div>';
+  var host = document.getElementById("wizardHost");
+
+  if(key === "aws-standard") buildAwsStandardWizard(host, key);
+  else if(key === "azure") buildAzureWizard(host, key);
+  else if(key === "gcp") buildGcpWizard(host, key);
+  else if(key === "aws-express") buildExpressHub(host, key);
+}
+
+/* =====================================================================
+   QUIZ ENGINE
+   ===================================================================== */
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+function renderQuizIntro(key, m){
+  var pane = document.getElementById("modQuiz");
+  pane.innerHTML = '<div id="quizHost"></div>';
+  buildQuiz(document.getElementById("quizHost"), key, m);
+}
+
+function buildQuiz(host, key, m){
+  var questions = shuffle(m.quiz);
+  var idx = 0;
+  var answers = []; // {qIndex, chosen, correct}
+
+  function renderIntro(){
+    host.innerHTML =
+      '<div class="wizard">' +
+        '<h3 class="step-title">'+m.title+' knowledge check</h3>' +
+        '<p class="step-help">'+questions.length+' questions, straight from the Learn tab. Score 80% or higher to pass — you can retake it as many times as you want.</p>' +
+        '<div class="wizard-nav" style="border-top:none; padding-top:0; margin-top:6px; justify-content:flex-start;">' +
+          '<button class="btn btn-primary" id="quizStart">Start quiz</button>' +
+        '</div>' +
+      '</div>';
+    document.getElementById("quizStart").addEventListener("click", function(){ idx=0; answers=[]; questions = shuffle(m.quiz); renderQuestion(); });
+  }
+
+  function renderQuestion(){
+    var q = questions[idx];
+    var optOrder = q.options.map(function(_,i){ return i; });
+    // keep options in original order (clearer for training) but could shuffle; leaving stable for now
+    host.innerHTML =
+      '<div class="wizard">' +
+        '<div class="steps-track">' + questions.map(function(_,i){ return '<div class="step-dot '+(i<idx?"done":(i===idx?"active":""))+'"></div>'; }).join("") + '</div>' +
+        '<div class="quiz-progress">Question '+(idx+1)+' of '+questions.length+'</div>' +
+        '<h3 class="step-title">'+q.q+'</h3>' +
+        '<div id="quizOpts"></div>' +
+        '<div id="quizExplainWrap"></div>' +
+        '<div class="wizard-nav"><button class="btn btn-ghost" id="quizBack" '+(idx===0?"disabled":"")+'>Back</button><button class="btn btn-primary" id="quizNext" disabled>'+(idx===questions.length-1?"See results":"Next question")+'</button></div>' +
+      '</div>';
+    var optsWrap = document.getElementById("quizOpts");
+    var already = answers[idx];
+    q.options.forEach(function(opt, i){
+      var el = document.createElement("label");
+      el.className = "quiz-opt";
+      el.innerHTML = '<input type="radio" name="quizq" value="'+i+'"'+(already && already.chosen===i?" checked":"")+'><span>'+opt+'</span><span class="mark"></span>';
+      optsWrap.appendChild(el);
+    });
+    if(already){ lockAnswer(already.chosen); }
+    optsWrap.querySelectorAll('input[type=radio]').forEach(function(r){
+      r.addEventListener("change", function(){
+        var chosen = parseInt(r.value,10);
+        answers[idx] = { chosen: chosen, correct: chosen === q.correct };
+        lockAnswer(chosen);
+      });
+    });
+    function lockAnswer(chosen){
+      optsWrap.querySelectorAll("input").forEach(function(r){ r.disabled = true; });
+      optsWrap.querySelectorAll(".quiz-opt").forEach(function(row, i){
+        row.classList.remove("correct","incorrect");
+        var mark = row.querySelector(".mark");
+        if(i === q.correct){ row.classList.add("correct"); mark.textContent = "Correct"; }
+        else if(i === chosen){ row.classList.add("incorrect"); mark.textContent = "Your answer"; }
+        else { mark.textContent = ""; }
+      });
+      var good = chosen === q.correct;
+      document.getElementById("quizExplainWrap").innerHTML =
+        '<div class="quiz-explain '+(good?"good":"bad")+'"><b>'+(good?"Correct. ":"Not quite. ")+'</b>'+q.explain+'</div>';
+      document.getElementById("quizNext").disabled = false;
+    }
+    document.getElementById("quizBack").addEventListener("click", function(){ if(idx>0){ idx--; renderQuestion(); } });
+    document.getElementById("quizNext").addEventListener("click", function(){
+      if(idx < questions.length-1){ idx++; renderQuestion(); }
+      else { renderResults(); }
+    });
+  }
+
+  function renderResults(){
+    var score = answers.filter(function(a){ return a && a.correct; }).length;
+    var total = questions.length;
+    var pct = Math.round((score/total)*100);
+    var passed = pct >= 80;
+    markQuizResult(key, score, total);
+    var reviewHtml = questions.map(function(q,i){
+      var a = answers[i] || {};
+      return '<div class="quiz-review-item">' +
+        '<div class="q"><span class="tag '+(a.correct?"good":"bad")+'">'+(a.correct?"Correct":"Missed")+'</span>'+q.q+'</div>' +
+        '<div class="a">'+q.explain+'</div>' +
+      '</div>';
+    }).join("");
+    host.innerHTML =
+      '<div class="wizard">' +
+        '<div class="score-ring-wrap">' +
+          '<div class="score-big" style="color:'+(passed?"var(--good)":"var(--warn)")+'">'+score+'/'+total+'</div>' +
+          '<div class="score-sub">'+(passed?"Passed — nice work.":"Not quite there yet — review and try again.")+'</div>' +
+        '</div>' +
+        '<div class="summary-card">'+reviewHtml+'</div>' +
+        '<div class="wizard-nav" style="justify-content:flex-start;"><button class="btn btn-primary" id="quizRetake">Retake quiz</button></div>' +
+      '</div>';
+    document.getElementById("quizRetake").addEventListener("click", renderIntro);
+  }
+
+  renderIntro();
+}
+
+/* ================= AWS STANDARD / CPPO WIZARD ================= */
+function buildAwsStandardWizard(host, key){
+  var P = "awsstd";
+  host.innerHTML = '<div class="wizard" id="wzRoot"></div>';
+  var root = document.getElementById("wzRoot");
+
+  buildWizard(root, {
+    prefixLabel: "AWS Private Offer",
+    steps: [
+      { title:"Start the offer", help:"Pick the offer path and product. The product can't be changed later, so get this right first.",
+        render:function(body, state){
+          body.innerHTML =
+            radioGroupHTML({id:"path", label:"Offer path", required:true, preselectFirst:true, options:[
+              {v:"own", t:"New offer for our own product", s:"Standard private offer"},
+              {v:"cppo", t:"Channel Partner Private Offer (CPPO)", s:"Reselling an ISV's product under a resale authorization"}
+            ]}, P) +
+            '<div class="form-grid" style="margin-top:14px;">' +
+            fieldHTML({id:"product", label:"Product", required:true, placeholder:"e.g., Northwind Observability Suite"}, P) +
+            fieldHTML({id:"productType", label:"Product type", type:"select", required:true, placeholder:"Select…", options:["SaaS contract","AMI / server product","Professional services","Contract with consumption (CCP)"]}, P) +
+            '</div>' +
+            '<div id="cppoExtra" style="display:'+(getRadio(P,"path")==="cppo"?"grid":"none")+'; margin-top:14px;" class="form-grid">' +
+            fieldHTML({id:"isv", label:"ISV (publisher)", required:(getRadio(P,"path")==="cppo"), placeholder:"e.g., Northwind Software Inc."}, P) +
+            fieldHTML({id:"auth", label:"Resale authorization", type:"select", required:(getRadio(P,"path")==="cppo"), placeholder:"Select…", options:["Active — Northwind / North America","Active — Northwind / Global"]}, P) +
+            '</div>';
+          body.querySelectorAll('input[name="'+P+'_path"]').forEach(function(r){
+            r.addEventListener("change", function(){
+              document.getElementById("cppoExtra").style.display = (getRadio(P,"path")==="cppo") ? "grid" : "none";
+              body.querySelectorAll(".field[data-fid^='"+P+"_isv'],.field[data-fid^='"+P+"_auth']").forEach(function(f){
+                f.dataset.required = (getRadio(P,"path")==="cppo") ? "1" : "0";
+              });
+            });
+          });
+        },
+        validate:function(body){ return validateStep(body); }
+      },
+      { title:"Offer information", help:"This is what buyers see when the offer lands in their console.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"name", label:"Offer name", required:true, placeholder:"e.g., Northwind Suite — Acme Corp FY27"}, P) +
+            fieldHTML({id:"purpose", label:"Offer purpose", type:"select", required:true, placeholder:"Select…", options:["New customer","Renewal — existing AWS Marketplace customer","Renewal — migrating to AWS Marketplace"]}, P) +
+            fieldHTML({id:"expiry", label:"Offer expiration date", type:"date", required:true}, P) +
+            '</div>' +
+            '<div class="form-grid single" style="margin-top:14px;">' +
+            fieldHTML({id:"details", label:"Offer details", type:"textarea", required:true, placeholder:"Internal notes on scope, negotiated terms, approvals…"}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Pricing &amp; duration", help:"Private offers can be priced outside USD — confirm the buyer's account region supports the currency you pick.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"model", label:"Pricing model", type:"select", required:true, placeholder:"Select…", options:["Flat contract","Usage-based","Contract + consumption"]}, P) +
+            fieldHTML({id:"duration", label:"Contract duration", type:"select", required:true, placeholder:"Select…", options:["12 months","24 months","36 months","Custom"]}, P) +
+            fieldHTML({id:"amount", label:"Total contract value", type:"number", required:true, placeholder:"150000"}, P) +
+            fieldHTML({id:"currency", label:"Currency", type:"select", required:true, options:["USD","EUR","GBP","CAD","AUD"]}, P) +
+            fieldHTML({id:"schedule", label:"Payment schedule", type:"select", required:true, placeholder:"Select…", options:["Upfront","Monthly","Quarterly","Custom installments"]}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Add buyers", help:"Up to 24 AWS account IDs per offer. Separate multiple accounts with commas.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid single">' +
+            fieldHTML({id:"buyers", label:"AWS account ID(s)", required:true, placeholder:"e.g., 123456789012, 234567890123", hint:"12-digit account IDs, comma-separated."}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Legal terms", help:"Choose how this offer's terms are documented.",
+        render:function(body){
+          body.innerHTML = radioGroupHTML({id:"legal", label:"Legal terms", required:true, preselectFirst:true, options:[
+            {v:"eula", t:"Public offer EULA", s:"Reuse the EULA from your existing public listing"},
+            {v:"scmp", t:"Standard Contract for AWS Marketplace (SCMP)", s:"AWS's standard contract template"},
+            {v:"custom", t:"Custom legal terms", s:"Upload up to 5 files — merged into one document"}
+          ]}, P);
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Auto-renewal", help:"Optional. Leave as “No renewal” if this is a one-time term.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"renew", label:"Renewal pricing", type:"select", options:["No renewal","No price uplift","Fixed % uplift","Uplift range"]}, P) +
+            fieldHTML({id:"renewMax", label:"Renewal maximum", placeholder:"e.g., 2 cycles, or Unlimited"}, P) +
+            '</div>';
+        }, validate:function(){ return true; }
+      },
+      { title:"Review &amp; create", help:"This mirrors AWS Partner Central's review screen. Nothing is submitted anywhere real.",
+        render:function(body){
+          body.innerHTML = summaryRows([
+            ["Offer path", getRadio(P,"path")==="cppo" ? "Channel Partner Private Offer" : "Standard offer"],
+            ["Product", getVal(P,"product")],
+            ["Offer name", getVal(P,"name")],
+            ["Purpose", getVal(P,"purpose")],
+            ["Expiration", getVal(P,"expiry")],
+            ["Pricing model", getVal(P,"model")],
+            ["Duration", getVal(P,"duration")],
+            ["Total contract value", getVal(P,"amount") ? (getVal(P,"currency")+" "+getVal(P,"amount")) : ""],
+            ["Payment schedule", getVal(P,"schedule")],
+            ["Buyer account(s)", getVal(P,"buyers")],
+            ["Legal terms", getRadio(P,"legal")],
+            ["Auto-renewal", getVal(P,"renew")]
+          ]);
+        }, validate:function(){ return true; }
+      }
+    ],
+    onFinish:function(){
+      markPracticed(key);
+      root.innerHTML = successBox("Offer created (practice mode)", "In AWS Partner Central, this triggers Catalog API validation (up to ~1 hour) before the offer reaches the buyer's Available private offers tab.") +
+        '<button class="btn btn-ghost btn-sm" id="wzAgain">Start over</button>';
+      document.getElementById("wzAgain").addEventListener("click", function(){ clearPrefix("awsstd"); buildAwsStandardWizard(host, key); });
+    }
+  });
+}
+
+/* ================= AZURE WIZARD ================= */
+function buildAzureWizard(host, key){
+  var P = "az";
+  host.innerHTML = '<div class="wizard" id="wzRoot"></div>';
+  var root = document.getElementById("wzRoot");
+
+  buildWizard(root, {
+    prefixLabel:"Azure Private Offer",
+    steps:[
+      { title:"Direct, or through a partner?", help:"Multiparty offers add a channel partner between you and the customer — they set the customer price, you don't.",
+        render:function(body){
+          body.innerHTML = radioGroupHTML({id:"relationship", label:"Offer relationship", required:true, preselectFirst:true, options:[
+            {v:"direct", t:"Customer private offer (direct)", s:"You send the offer straight to the customer"},
+            {v:"multiparty", t:"Multiparty private offer", s:"A channel partner resells it — they set the customer-facing price"}
+          ]}, P) +
+          '<div id="partnerExtra" style="display:'+(getRadio(P,"relationship")==="multiparty"?"grid":"none")+'; margin-top:14px;" class="form-grid">' +
+          fieldHTML({id:"partnerSellerId", label:"Channel partner Marketplace Seller ID", required:(getRadio(P,"relationship")==="multiparty"), placeholder:"e.g., 987654", hint:"Partner Center → Account settings → Identifiers → Publisher"}, P) +
+          '</div>' +
+          '<div class="callout" id="partnerNote" style="display:'+(getRadio(P,"relationship")==="multiparty"?"block":"none")+';">Only one channel partner per offer, and they need a completed tax profile in an eligible country. Professional services and hardware bundling are not eligible for multiparty offers.</div>';
+          body.querySelectorAll('input[name="'+P+'_relationship"]').forEach(function(r){
+            r.addEventListener("change", function(){
+              var isMulti = getRadio(P,"relationship") === "multiparty";
+              document.getElementById("partnerExtra").style.display = isMulti ? "grid" : "none";
+              document.getElementById("partnerNote").style.display = isMulti ? "block" : "none";
+              body.querySelectorAll(".field[data-fid='"+P+"_partnerSellerId']").forEach(function(f){
+                f.dataset.required = isMulti ? "1" : "0";
+              });
+            });
+          });
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Pick the offer type", help:"The offer name is visible to the customer in the Azure portal.",
+        render:function(body){
+          var isMulti = getRadio(P,"relationship") === "multiparty";
+          body.innerHTML = '<div class="form-grid single">' +
+            fieldHTML({id:"name", label:"Private offer name", required:true, placeholder:"e.g., Contoso Analytics — Fabrikam FY27"}, P) +
+            '</div><div style="margin-top:14px;">' +
+            radioGroupHTML({id:"type", label:"Offer type", required:true, preselectFirst:true, options: isMulti ? [
+              {v:"adjust", t:"Price adjustment to public plan", s:"Discount % or absolute price — SaaS, VM, Azure App, Container"},
+              {v:"newplan", t:"New absolute-priced plan", s:"SaaS or Dragon Copilot only — new plan ID"},
+              {v:"vm", t:"VM software reservation", s:"Custom pricing on reserved VM software"}
+            ] : [
+              {v:"adjust", t:"Price adjustment to public plan", s:"Discount % or absolute price on an existing plan"},
+              {v:"newplan", t:"New absolute-priced plan", s:"SaaS / Professional Services / Dragon Copilot — new plan ID"},
+              {v:"vm", t:"VM software reservation", s:"Custom pricing on reserved VM software"}
+            ]}, P) + '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Identify the customer", help:"Absolute pricing requires the customer's market currency to match their billing account currency.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"billing", label:"Customer billing account ID", required:true, placeholder:"e.g., 8e5a1c2f-…", hint:"Azure portal → Cost Management + Billing → Properties"}, P) +
+            fieldHTML({id:"currency", label:"Customer market currency", type:"select", required:true, options:["USD","EUR","GBP","CAD","AUD","JPY"]}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Set the dates", help:"All dates and times are UTC.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"start", label:"Pricing start", type:"select", required:true, options:["On customer acceptance","First of a specific month"]}, P) +
+            fieldHTML({id:"end", label:"Purchase-by (end) date", type:"date", required:true}, P) +
+            fieldHTML({id:"acceptBy", label:"Accept-by date", type:"date", required:true}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Configure pricing", help:"Fields shown depend on the offer type you chose in step 1.",
+        render:function(body, state){
+          var type = getRadio(P,"type") || "adjust";
+          var html = "";
+          if(type === "adjust"){
+            html = '<div class="form-grid">' +
+              fieldHTML({id:"discLevel", label:"Discount level", type:"select", required:true, options:["Offer-level","Plan-level"]}, P) +
+              fieldHTML({id:"discAmt", label:"Discount", required:true, placeholder:"e.g., 15% or $4,200"}, P) +
+              '</div>';
+          } else if(type === "newplan"){
+            html = '<div class="form-grid">' +
+              fieldHTML({id:"planName", label:"New plan name", required:true, placeholder:"e.g., Fabrikam-FY27-Custom"}, P) +
+              fieldHTML({id:"pricingModel", label:"Pricing model", type:"select", required:true, options:["Flat rate — term (months)","Per user"]}, P) +
+              fieldHTML({id:"term", label:"Term / seats", required:true, placeholder:"e.g., 36 months, or 25–250 users"}, P) +
+              fieldHTML({id:"price", label:"Price", required:true, placeholder:"e.g., $180,000 total"}, P) +
+              '</div>';
+          } else {
+            html = '<div class="form-grid">' +
+              fieldHTML({id:"vmDuration", label:"Reservation duration", type:"select", required:true, options:["1 year","3 years"]}, P) +
+              fieldHTML({id:"vmFreq", label:"Billing frequency", type:"select", required:true, options:["Upfront","Monthly","Flexible"]}, P) +
+              fieldHTML({id:"vmSize", label:"vCPU size &amp; quantity", required:true, placeholder:"e.g., 8 vCPU x 40"}, P) +
+              fieldHTML({id:"vmPrice", label:"Unit price (USD)", type:"number", required:true, placeholder:"1200"}, P) +
+              '</div>';
+          }
+          body.innerHTML = html;
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Terms, renewal &amp; notifications", help:"Optional custom terms, renewal behavior, and who gets status emails.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"terms", label:"Custom terms PDF", placeholder:"e.g., MSA-Addendum-Fabrikam.pdf"}, P) +
+            fieldHTML({id:"renewal", label:"On expiration, renew into", type:"select", options:["Another private offer","Public offer","Do not renew"]}, P) +
+            fieldHTML({id:"preparedBy", label:"“Prepared by” contact (customer-visible)", type:"email", placeholder:"you@partner.com"}, P) +
+            fieldHTML({id:"notify", label:"Additional notification emails", placeholder:"comma-separated, up to 5"}, P) +
+            '</div>';
+        }, validate:function(){ return true; }
+      },
+      { title:"Review &amp; submit", help:"Submitting locks the offer — you can only withdraw it before the customer accepts.",
+        render:function(body){
+          var type = getRadio(P,"type");
+          var isMulti = getRadio(P,"relationship") === "multiparty";
+          body.innerHTML = summaryRows([
+            ["Relationship", isMulti ? "Multiparty (via channel partner)" : "Direct (customer private offer)"],
+            ["Channel partner Seller ID", isMulti ? getVal(P,"partnerSellerId") : ""],
+            ["Offer name", getVal(P,"name")],
+            ["Type", type==="adjust"?"Price adjustment":type==="newplan"?"New absolute-priced plan":"VM software reservation"],
+            ["Customer billing account", getVal(P,"billing")],
+            ["Currency", getVal(P,"currency")],
+            ["Pricing start", getVal(P,"start")],
+            ["End date", getVal(P,"end")],
+            ["Accept-by", getVal(P,"acceptBy")],
+            ["Prepared by", getVal(P,"preparedBy")],
+            ["Renewal", getVal(P,"renewal")]
+          ]) + '<div class="callout" style="margin-top:14px;">This can\'t be edited after you submit — only withdrawn while still Pending Acceptance'+(isMulti?' (and only by the partner, once it reaches that status)':'')+'.</div>';
+        }, validate:function(){ return true; }
+      }
+    ],
+    onFinish:function(){
+      markPracticed(key);
+      var isMulti = getRadio(P,"relationship") === "multiparty";
+      root.innerHTML = successBox("Offer submitted (practice mode)", isMulti ?
+          "This now moves to “Pending partner action” — the channel partner sets the customer-facing price and shares the link before it reaches the customer." :
+          "In Partner Center this enters In Progress for up to ~15 minutes, then Pending Acceptance until the customer acts in the Azure portal.") +
+        '<button class="btn btn-ghost btn-sm" id="wzAgain">Start over</button>';
+      document.getElementById("wzAgain").addEventListener("click", function(){ clearPrefix("az"); buildAzureWizard(host, key); });
+    }
+  });
+}
+
+/* ================= GCP WIZARD ================= */
+function buildGcpWizard(host, key){
+  var P = "gcp";
+  host.innerHTML = '<div class="wizard" id="wzRoot"></div>';
+  var root = document.getElementById("wzRoot");
+
+  buildWizard(root, {
+    prefixLabel:"Google Cloud Private Offer",
+    steps:[
+      { title:"Add product &amp; customer details", help:"You'll need the customer's Cloud Billing account ID before you start.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"product", label:"Product / SKU", required:true, placeholder:"e.g., Helios Data Platform — Enterprise SKU"}, P) +
+            fieldHTML({id:"billing", label:"Customer Cloud Billing account ID", required:true, placeholder:"e.g., 01A2B3-C4D5E6-F7G8H9"}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Configure pricing", help:"Set the custom terms for this customer only — it doesn't change your public listing.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"model", label:"Pricing model", type:"select", required:true, options:["Flat rate","Percent discount off list","Tiered"]}, P) +
+            fieldHTML({id:"amount", label:"Price / discount", required:true, placeholder:"e.g., 20% or $96,000 total"}, P) +
+            fieldHTML({id:"duration", label:"Offer duration", type:"select", required:true, options:["12 months","24 months","36 months","Custom"]}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Specify the EULA", help:"Most offers reuse the standard marketplace EULA.",
+        render:function(body){
+          body.innerHTML = radioGroupHTML({id:"eula", label:"End user license agreement", required:true, preselectFirst:true, options:[
+            {v:"default", t:"Use standard marketplace EULA", s:"Same terms as your public listing"},
+            {v:"custom", t:"Attach custom EULA", s:"Upload a negotiated agreement for this deal"}
+          ]}, P);
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Review &amp; publish", help:"Publishing sends the offer to the customer's Cloud Billing account for acceptance.",
+        render:function(body){
+          body.innerHTML = summaryRows([
+            ["Product / SKU", getVal(P,"product")],
+            ["Customer billing account", getVal(P,"billing")],
+            ["Pricing model", getVal(P,"model")],
+            ["Price / discount", getVal(P,"amount")],
+            ["Duration", getVal(P,"duration")],
+            ["EULA", getRadio(P,"eula")==="custom" ? "Custom, attached" : "Standard marketplace EULA"]
+          ]);
+        }, validate:function(){ return true; }
+      }
+    ],
+    onFinish:function(){
+      markPracticed(key);
+      root.innerHTML = successBox("Offer published (practice mode)", "The customer would now see this offer against their Cloud Billing account in the Google Cloud console.") +
+        '<button class="btn btn-ghost btn-sm" id="wzAgain">Start over</button>';
+      document.getElementById("wzAgain").addEventListener("click", function(){ clearPrefix("gcp"); buildGcpWizard(host, key); });
+    }
+  });
+}
+
+/* ================= AWS EXPRESS: seller + buyer hub ================= */
+var expressRateCard = null; // shared between seller config and buyer simulation
+
+function buildExpressHub(host, key){
+  host.innerHTML =
+    '<div class="tabgroup" style="margin-bottom:16px; display:inline-flex;">' +
+      '<button id="exTabSeller" class="active">Seller: configure rate card</button>' +
+      '<button id="exTabBuyer">Buyer: request an offer</button>' +
+    '</div>' +
+    '<div id="exSellerPane"></div>' +
+    '<div id="exBuyerPane" hidden></div>';
+
+  var sellerBtn = document.getElementById("exTabSeller"), buyerBtn = document.getElementById("exTabBuyer");
+  var sellerPane = document.getElementById("exSellerPane"), buyerPane = document.getElementById("exBuyerPane");
+  sellerBtn.addEventListener("click", function(){
+    sellerBtn.classList.add("active"); buyerBtn.classList.remove("active");
+    sellerPane.hidden=false; buyerPane.hidden=true;
+  });
+  buyerBtn.addEventListener("click", function(){
+    buyerBtn.classList.add("active"); sellerBtn.classList.remove("active");
+    buyerPane.hidden=false; sellerPane.hidden=true;
+    renderExpressBuyerFlow(buyerPane, key);
+  });
+
+  buildExpressSellerWizard(sellerPane, key);
+}
+
+function buildExpressSellerWizard(host, key){
+  var P = "exs";
+  host.innerHTML = '<div class="wizard" id="wzRootSeller"></div>';
+  var root = document.getElementById("wzRootSeller");
+
+  buildWizard(root, {
+    prefixLabel:"Express Private Offer — seller setup",
+    steps:[
+      { title:"Confirm eligibility", help:"All of these must be true before AWS lets you turn on Express Private Offers.",
+        render:function(body){
+          body.innerHTML = checkGroupHTML({id:"elig", label:"Eligibility checklist", required:true, min:3, errText:"Check every item — all three are required to enable Express Private Offers.", options:[
+            {v:"listing", t:"Active SaaS contract listing", s:"Or SaaS contract with pay-as-you-go"},
+            {v:"button", t:"Onboarded for the “Request Private Offer” button", s:"Completed via AWS Partner Central"},
+            {v:"iam", t:"Correct IAM permissions", s:"AWSMarketplaceSellerFullAccess or equivalent custom policy"}
+          ]}, P);
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Choose rate card type(s)", help:"Dimension-based and TCV-based can't be combined with each other — each can pair with buyer-profile.",
+        render:function(body){
+          body.innerHTML = radioGroupHTML({id:"cardType", label:"Rate card basis", required:true, preselectFirst:true, options:[
+            {v:"dimension", t:"Dimension-based", s:"Discount tiers by quantity of a pricing dimension"},
+            {v:"tcv", t:"Total contract value (TCV)-based", s:"Discount tiers by deal size"}
+          ]}, P) +
+          '<div style="margin-top:12px;">' + checkGroupHTML({id:"profile", label:"Add buyer-profile qualifiers?", required:false, min:0, options:[
+            {v:"yes", t:"Yes — add up to 5 qualifying questions", s:"Combine with the tier basis above"}
+          ]}, P) + '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Set discount tiers", help:"Three tiers is typical. Higher tiers should unlock a bigger discount.",
+        render:function(body){
+          var basis = getRadio("exs","cardType")==="tcv" ? "Min. total contract value (USD)" : "Min. quantity (units)";
+          var wantProfile = getChecks("exs","profile") > 0;
+          var html = '<table class="tier-table"><tr><th>Tier</th><th>'+basis+'</th><th>Discount %</th></tr>';
+          [["Tier 1","1000","5"],["Tier 2","5000","10"],["Tier 3","15000","18"]].forEach(function(row,i){
+            var minId = P+"_min"+i, discId = P+"_disc"+i;
+            var minVal = FS[minId] !== undefined ? FS[minId] : row[1];
+            var discVal = FS[discId] !== undefined ? FS[discId] : row[2];
+            FS[minId] = minVal; FS[discId] = discVal; // seed defaults so they survive even if untouched
+            html += '<tr><td>'+row[0]+'</td>'+
+              '<td><input type="number" id="'+minId+'" value="'+minVal+'"></td>'+
+              '<td><input type="number" id="'+discId+'" value="'+discVal+'"></td></tr>';
+          });
+          html += '</table>';
+          if(wantProfile){
+            html += '<div class="form-grid single" style="margin-top:16px;">' +
+              fieldHTML({id:"q1", label:"Qualifier 1", placeholder:"e.g., Buyer is a startup under 2 years old"}, P) +
+              fieldHTML({id:"q2", label:"Qualifier 2", placeholder:"e.g., Buyer has < 50 employees"}, P) +
+              '</div>';
+          }
+          body.innerHTML = html;
+        }, validate:function(){ return true; }
+      },
+      { title:"Set global controls", help:"Deals that exceed the TCV maximum route to your sales-assisted process instead of auto-approving.",
+        render:function(body){
+          body.innerHTML = '<div class="form-grid">' +
+            fieldHTML({id:"tcvMax", label:"Global TCV maximum (USD)", type:"number", required:true, placeholder:"250000"}, P) +
+            fieldHTML({id:"discCap", label:"Maximum discount cap (%)", type:"number", required:true, placeholder:"25", hint:"0 is allowed — qualification with no discount."}, P) +
+            '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Review &amp; publish rate card", help:"This is what the buyer-facing “Get Express Private Offer” button will evaluate against.",
+        render:function(body){
+          var basis = getRadio("exs","cardType")==="tcv" ? "Total contract value" : "Dimension quantity";
+          var tiers = [0,1,2].map(function(i){
+            return "Tier "+(i+1)+": ≥ "+getVal("exs","min"+i)+" → "+getVal("exs","disc"+i)+"%";
+          }).join(" · ");
+          body.innerHTML = summaryRows([
+            ["Rate card basis", basis],
+            ["Tiers", tiers],
+            ["Global TCV maximum", "$"+getVal("exs","tcvMax")],
+            ["Maximum discount cap", getVal("exs","discCap")+"%"]
+          ]);
+          // stash into shared state for buyer sim
+          expressRateCard = {
+            basis: getRadio("exs","cardType"),
+            tiers: [0,1,2].map(function(i){
+              return { min: parseFloat(getVal("exs","min"+i))||0, disc: parseFloat(getVal("exs","disc"+i))||0 };
+            }),
+            tcvMax: parseFloat(getVal("exs","tcvMax"))||0,
+            discCap: parseFloat(getVal("exs","discCap"))||0
+          };
+        }, validate:function(){ return true; }
+      }
+    ],
+    onFinish:function(){
+      markPracticed(key);
+      root.innerHTML = successBox("Rate card published (practice mode)", "The “Get Express Private Offer” button on your listing is now live for qualifying buyers. Try the buyer side in the tab above.") +
+        '<button class="btn btn-ghost btn-sm" id="wzAgain">Reconfigure</button>';
+      document.getElementById("wzAgain").addEventListener("click", function(){ clearPrefix("exs"); buildExpressSellerWizard(host, key); });
+    }
+  });
+}
+
+function renderExpressBuyerFlow(pane, key){
+  if(!expressRateCard){
+    pane.innerHTML = '<div class="wizard"><div class="callout">No rate card configured yet. Set one up in the <b>Seller</b> tab first, then come back — the buyer flow evaluates against whatever you published.</div></div>';
+    return;
+  }
+  var P = "exb";
+  var basisLabel = expressRateCard.basis === "tcv" ? "your total contract value (USD)" : "the quantity you need";
+  pane.innerHTML = '<div class="wizard" id="wzRootBuyer"></div>';
+  var root = document.getElementById("wzRootBuyer");
+
+  buildWizard(root, {
+    prefixLabel:"Express Private Offer — buyer request",
+    steps:[
+      { title:"Click “Get Express Private Offer”", help:"This is the button a buyer sees on the product listing page.",
+        render:function(body){
+          body.innerHTML = '<p style="color:var(--ink-soft); font-size:13.5px; margin:0 0 12px;">Simulating the buyer clicking the button on your listing for <b>Northwind Observability Suite</b>.</p>' +
+            '<div class="form-grid single">' + fieldHTML({id:"amount", label:"Enter "+basisLabel, type:"number", required:true, placeholder:"e.g., 8000"}, P) + '</div>';
+        }, validate:function(body){ return validateStep(body); }
+      },
+      { title:"Qualification check", help:"AWS evaluates the buyer's input against your published rate card automatically.",
+        render:function(body){
+          var amt = parseFloat(getVal("exb","amount")) || 0;
+          var tier = null;
+          expressRateCard.tiers.slice().sort(function(a,b){return a.min-b.min;}).forEach(function(t){ if(amt >= t.min) tier = t; });
+          body.dataset.result = JSON.stringify({amt:amt, tier:tier});
+          var rows = [["Your input", (expressRateCard.basis==="tcv"?"$":"")+amt],
+                      ["Matched tier", tier ? ("≥ "+tier.min+" → "+tier.disc+"% discount") : "Below Tier 1 — 0% discount"],
+                      ["Global TCV maximum", "$"+expressRateCard.tcvMax],
+                      ["Maximum discount cap", expressRateCard.discCap+"%"]];
+          body.innerHTML = summaryRows(rows);
+        }, validate:function(){ return true; }
+      },
+      { title:"Result", help:"",
+        render:function(body, state, prevBody){},
+        skipHelp:true
+      }
+    ],
+    onFinish:function(){}
+  });
+
+  // Because the last step's outcome depends on computed state, intercept Finish specially:
+  root.addEventListener("click", function(e){
+    if(e.target && e.target.id === "wzNext"){
+      var trackDots = root.querySelectorAll(".step-dot");
+      // if we just moved onto the 3rd (final) step, render outcome
+      setTimeout(function(){
+        var title = root.querySelector(".step-title");
+        if(title && title.textContent.trim() === "Result"){
+          var amt = parseFloat(getVal("exb","amount")) || 0;
+          var tier = null;
+          expressRateCard.tiers.slice().sort(function(a,b){return a.min-b.min;}).forEach(function(t){ if(amt >= t.min) tier = t; });
+          var body = root.querySelector(".step-body");
+          var qualified = amt <= expressRateCard.tcvMax && !!tier;
+          if(qualified){
+            var disc = Math.min(tier.disc, expressRateCard.discCap || tier.disc);
+            body.innerHTML = '<div class="buyer-outcome qualified">' +
+              '<b>Instant Express Private Offer generated.</b><br>' +
+              'Applied discount: <b>'+disc+'%</b>. This offer is now named with an “express private offer” identifier and behaves like a standard private offer from here — the buyer accepts it and it moves to Agreements.' +
+              '</div>';
+          } else {
+            body.innerHTML = '<div class="buyer-outcome routed">' +
+              '<b>Routed to sales-assisted workflow.</b><br>' +
+              (amt > expressRateCard.tcvMax ? 'This request exceeds the global TCV maximum ($'+expressRateCard.tcvMax+'), ' : 'This request falls outside every configured tier, ') +
+              'so it is not auto-approved — a seller now needs to build a standard private offer instead.' +
+              '</div>';
+          }
+          var nav = root.querySelector(".wizard-nav");
+          if(nav){
+            nav.innerHTML = '<button class="btn btn-ghost" id="exAgain">Try another amount</button><span></span>';
+            document.getElementById("exAgain").addEventListener("click", function(){
+              markPracticed(key);
+              clearPrefix("exb");
+              renderExpressBuyerFlow(pane, key);
+            });
+          }
+        }
+      }, 0);
+    }
+  });
+}
+
+/* ---------------- start-here: primer, glossary, cheat sheet ---------------- */
+var GLOSSARY = [
+  ["Private offer","A negotiated, custom-priced version of a listing that only the buyer(s) you name can see and accept — different from the public, list-price version anyone can buy."],
+  ["EULA","End User License Agreement — the legal terms governing use of the product. A private offer can reuse the public EULA, use a standard marketplace contract, or attach custom terms."],
+  ["CPPO","Channel Partner Private Offer (AWS) — a private offer a reselling partner creates on behalf of an ISV, under a resale authorization, instead of the ISV selling direct."],
+  ["Multiparty private offer","Azure's equivalent of a reseller-involved offer — a channel partner sits between the ISV and the customer and sets the customer-facing price."],
+  ["TCV","Total Contract Value — the full dollar value of the deal over its whole term, used as a threshold in tiered discounting (e.g., AWS Express rate cards)."],
+  ["SCMP","Standard Contract for AWS Marketplace — AWS's own pre-written legal contract sellers can use instead of drafting custom terms."],
+  ["Billing Account ID","The identifier Azure and Google Cloud use to target a private offer to a specific customer — the equivalent of an AWS Account ID on that platform."],
+  ["Rate card","A set of discount rules (by quantity, deal size, or buyer profile) that a seller configures in advance so AWS Express Private Offers can auto-generate a discounted offer without a human building it."]
+];
+var CHEAT_ROWS = [
+  ["Console you work in","AWS Partner Central","Microsoft Partner Center","Google Cloud Producer Portal"],
+  ["ID that targets the buyer","AWS Account ID (12-digit)","Billing Account ID","Cloud Billing Account ID"],
+  ["Reseller / partner variant","Channel Partner Private Offer (CPPO)","Multiparty private offer","Not covered in this app — check Google's partner docs"],
+  ["Self-service / automated variant","Express Private Offer","Not offered","Not offered"],
+  ["Legal terms options","Public EULA, SCMP, or custom terms","Custom terms PDF (optional)","Standard or custom EULA"],
+  ["Editable after you submit?","Draft: yes. Active: expiration date + clone only.","No — locked; withdraw only, and only pre-acceptance","Not documented in the partner docs reviewed — verify in console"]
+];
+
+function renderStartHere(){
+  var body = document.getElementById("startHereBody");
+  var primer =
+    '<div class="info-block starthere-primer" style="box-shadow:none; border:none; padding:0; margin-bottom:0;">' +
+      '<h4>What is a private offer, in plain terms?</h4>' +
+      '<p>Every product on AWS, Azure, and Google Cloud Marketplace has a public, list price anyone can buy at. A <b>private offer</b> is a custom version of that listing — a specific price, term, and set of legal terms — that only the buyer (or buyers) you name can see and accept. Sellers use them for negotiated enterprise deals, renewals, multi-year discounts, or migrating an existing contract onto the marketplace.</p>' +
+      '<p>The shape is the same on all three clouds even though the screens look different: a seller (you) configures the pricing and terms, the offer gets sent to a specific buyer, the buyer reviews and accepts it in their own console, and — once accepted — it becomes a real, billable agreement. Everything in this app before the word <b>Quiz</b> is teaching you that one flow, three times, in three different consoles.</p>' +
+    '</div>';
+
+  var glossary =
+    '<div class="info-block" style="box-shadow:none; border:none; padding:0; margin-bottom:0;">' +
+      '<h4>Glossary — the jargon you’ll hit immediately</h4>' +
+      '<dl class="glossary-grid">' +
+      GLOSSARY.map(function(g){ return '<div class="gloss-item"><dt>'+g[0]+'</dt><dd>'+g[1]+'</dd></div>'; }).join("") +
+      '</dl>' +
+    '</div>';
+
+  var cheat =
+    '<div class="info-block" style="box-shadow:none; border:none; padding:0; margin-bottom:0;">' +
+      '<h4>AWS ↔ Azure ↔ GCP cheat sheet</h4>' +
+      '<div class="sub" style="margin-bottom:10px;">Same underlying concept, different name — worth bookmarking before you jump between modules.</div>' +
+      '<div class="cheat-table-wrap"><table class="cheat-table"><thead><tr>' +
+        '<th>Concept</th>' +
+        '<th><span class="cloud-th"><span class="cloud-dot aws"></span>AWS</span></th>' +
+        '<th><span class="cloud-th"><span class="cloud-dot azure"></span>Azure</span></th>' +
+        '<th><span class="cloud-th"><span class="cloud-dot gcp"></span>GCP</span></th>' +
+      '</tr></thead><tbody>' +
+      CHEAT_ROWS.map(function(r){ return '<tr><td class="concept">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'; }).join("") +
+      '</tbody></table></div>' +
+    '</div>';
+
+  var cta =
+    '<div class="start-cta">' +
+      '<button class="btn btn-primary" id="startCtaAws">Start with AWS Private Offer →</button>' +
+      '<button class="btn btn-ghost" id="startCtaHide">I know the basics, hide this</button>' +
+    '</div>';
+
+  body.innerHTML = primer + glossary + cheat + cta;
+  document.getElementById("startCtaAws").addEventListener("click", function(){ openModule("aws-standard","learn"); });
+  document.getElementById("startCtaHide").addEventListener("click", collapseStartHere);
+}
+
+function collapseStartHere(){
+  document.getElementById("startHere").classList.add("collapsed");
+  document.getElementById("startHereToggleLabel").textContent = "Show";
+  try{ localStorage.setItem("poa_starthere_collapsed","1"); }catch(e){}
+}
+function expandStartHere(){
+  document.getElementById("startHere").classList.remove("collapsed");
+  document.getElementById("startHereToggleLabel").textContent = "Hide";
+  try{ localStorage.removeItem("poa_starthere_collapsed"); }catch(e){}
+}
+document.getElementById("startHereToggle").addEventListener("click", function(){
+  var collapsed = document.getElementById("startHere").classList.contains("collapsed");
+  if(collapsed) expandStartHere(); else collapseStartHere();
+});
+
+/* ---------------- init ---------------- */
+renderHomeCards();
+updateProgressRing();
+renderStartHere();
+try{ if(localStorage.getItem("poa_starthere_collapsed")) collapseStartHere(); }catch(e){}
+goHome();
+
+})();
+</script>
+
+
+<script>
+/* ---------- PWA: service worker + install button ---------- */
+(function(){
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("./sw.js").catch(function(){});
+    });
+  }
+  var deferred = null, btn = document.getElementById("installBtn");
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault(); deferred = e;
+    if(btn) btn.classList.add("show");
+  });
+  if(btn){
+    btn.addEventListener("click", function(){
+      if(!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.finally(function(){ deferred = null; btn.classList.remove("show"); });
+    });
+  }
+  window.addEventListener("appinstalled", function(){ if(btn) btn.classList.remove("show"); });
+})();
+</script>
+</body>
+</html>
