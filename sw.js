@@ -1,6 +1,6 @@
 /* Private Offer Academy — service worker
    Bump VERSION whenever you change index.html so installed copies pick up the update. */
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = "poa-shell-" + VERSION;
 const RUNTIME = "poa-runtime-v1";
 const SHELL_FILES = [
