@@ -606,9 +606,13 @@ var MODULES = {
       ["Submitting before double-checking everything", "There's no edit after submission — only withdraw (while still Pending Acceptance) and recreate."],
       ["Currency mismatch on absolute pricing", "The customer's market currency has to match their billing account currency for absolute pricing — percentage-discount offers don't have this restriction."],
       ["Assuming Microsoft emails the customer", "It doesn't — you have to send the offer link to the customer yourself."],
-      ["Trying to withdraw a multiparty offer that's Pending acceptance", "Only the channel partner can withdraw at that stage — the ISV can only withdraw while it's still Pending partner action."]
+      ["Trying to withdraw a multiparty offer that's Pending acceptance", "Only the channel partner can withdraw at that stage — the ISV can only withdraw while it's still Pending partner action."],
+      ["Leaving “Request private offer” switched off", "It's off by default. Turn it on for each eligible transactable offer in the Marketplace offers workspace and republish the offer — otherwise customers won't see the request option on your listing."]
     ],
     learn:[
+      {t:"Let customers ask for an offer", s:"Request private offer — since July 20, 2026",
+       body:"<p>Before you build anything, you can let customers start the conversation. Since <b>July 20, 2026</b>, you can add a <b>Request private offer</b> option to a listing page so interested customers can ask for a private offer and describe their use case. It's available for SaaS, Azure application, Azure container, and Azure Virtual Machines offers.</p><p>The setting is <b>off by default</b>. In the Marketplace offers workspace of Partner Center, turn it on for each eligible transactable offer and republish the offer. Customer requests arrive as Marketplace leads — in the referrals workspace and in any CRM integrations you've connected.</p>",
+       fields:[["Where","Marketplace offers workspace"],["Default","Off — turn on per offer"],["Then","Republish the offer"]]},
       {t:"Start the offer", s:"Marketplace offers → Private offers → Customers",
        body:"<p>In <b>Partner Center</b>, open the <b>Marketplace offers</b> workspace, go to <b>Private offers → Customers</b>, and select <b>+ New private offer</b>. Name it clearly — the name is visible to you in Partner Center and to the customer in the Azure portal.</p>"},
       {t:"Direct, or through a channel partner?", s:"Customer private offer vs. multiparty private offer",
@@ -625,11 +629,13 @@ var MODULES = {
       {t:"Terms, renewal, notifications", s:"Optional but easy to miss",
        body:"<p>You can attach a custom terms PDF (it still has to comply with the Microsoft Publisher Agreement), choose whether the deal renews into another private offer or falls back to the public offer, and list up to five notification emails plus a customer-visible <b>Prepared by</b> contact.</p>"},
       {t:"If a partner is involved: the multiparty flow", s:"Three parties, three statuses",
-       body:"<p>On a multiparty offer you additionally enter the partner's <b>Marketplace Seller ID</b> (found in their Partner Center under Account settings → Identifiers → Publisher) — the partner must have a completed tax profile and be in an eligible country, and only one partner can be attached per offer.</p><p>Once you submit, the offer doesn't go straight to the customer — it moves through three statuses:</p><ul><li><b>Pending partner action</b> — the partner sets their own customer-facing price (separate from your wholesale price to them) and shares the offer link. They can also withdraw it here, which sends it back to you as a draft.</li><li><b>Pending acceptance</b> — the customer reviews and accepts in the Azure portal. You <b>cannot</b> withdraw once it reaches this status; only the partner can, up until the customer purchases.</li><li><b>Accepted</b> — locked; Microsoft calculates your payout from the partner price you set, visible in the Earnings dashboard.</li></ul>",
+       body:"<p>On a multiparty offer you additionally enter the partner's <b>Marketplace Seller ID</b> (found in their Partner Center under Account settings → Identifiers → Publisher) — the partner must have a completed tax profile and be in an eligible country, and only one partner can be attached per offer.</p><p>Multiparty private offers are available when selling to customers in <b>36 markets</b>. Australia, Japan, and South Africa were added on July 16, 2026, alongside the US, Canada, the UK, and many European markets. Check Microsoft's ISV guidance for the current list.</p><p>Once you submit, the offer doesn't go straight to the customer — it moves through three statuses:</p><ul><li><b>Pending partner action</b> — the partner sets their own customer-facing price (separate from your wholesale price to them) and shares the offer link. They can also withdraw it here, which sends it back to you as a draft.</li><li><b>Pending acceptance</b> — the customer reviews and accepts in the Azure portal. You <b>cannot</b> withdraw once it reaches this status; only the partner can, up until the customer purchases.</li><li><b>Accepted</b> — locked; Microsoft calculates your payout from the partner price you set, visible in the Earnings dashboard.</li></ul>",
        callout:"Choosing “new absolute-priced plan” on a multiparty offer creates a new plan ID, same as direct — if the product has metered dimensions, emit usage against that new plan ID, not the public one."},
       {t:"Review &amp; submit", s:"Locked after submission",
        body:"<p>Once you submit, the offer cannot be edited — only withdrawn while still <b>Pending Acceptance</b>, or cancelled via a support ticket after acceptance. The customer accepts it in the Azure portal's Private Offer Management pane, or through a link you send them; Microsoft does not email them automatically, so tell them yourself.</p>",
-       callout:"Review carefully before submitting — there's no in-place edit, only withdraw-and-recreate."}
+       callout:"Review carefully before submitting — there's no in-place edit, only withdraw-and-recreate."},
+      {t:"How the customer buys", s:"One-step accept and purchase — since Nov 5, 2026",
+       body:"<p>Customers used to need two steps to accept and purchase a private offer. Since <b>November 5, 2026</b>, eligible private offers can be <b>accepted and purchased in a single step</b>, which gives the customer more flexibility over when the subscription or entitlements start. The change applies to the private offer experience for SaaS and professional services, and it's available for select offer types — check Microsoft's documentation for eligibility and exceptions.</p><p>Governance doesn't change: purchasing stays aligned with Azure RBAC through the admin role, and customers who want extra controls can turn off one-step purchasing and keep the original two-step process.</p>"}
     ],
     quiz:[
       {q:"On a multiparty private offer, who sets the price the customer actually pays?", options:["The ISV, always","The channel partner", "Microsoft, based on a fixed formula","The customer negotiates it directly in the Azure portal"], correct:1,
@@ -643,7 +649,13 @@ var MODULES = {
       {q:"Which offer types are NOT eligible for multiparty private offers?", options:["SaaS and Azure VM","Professional services and hardware bundling","Azure Container and Dragon Copilot","Azure App"], correct:1,
        explain:"Multiparty supports SaaS, Azure VM, Azure App, Azure Container, and Dragon Copilot — professional services and hardware bundling are excluded."},
       {q:"For a new absolute-priced SaaS plan with metered dimensions, which plan ID should be used to emit usage?", options:["The original public plan ID","The new plan ID created by the private offer","Either one works interchangeably","Usage can't be metered on absolute-priced plans"], correct:1,
-       explain:"An absolute-priced new plan gets its own unique plan ID — usage must be emitted against that new ID, not the public one."}
+       explain:"An absolute-priced new plan gets its own unique plan ID — usage must be emitted against that new ID, not the public one."},
+      {q:"What changed for customers buying an eligible private offer on November 5, 2026?", options:["Offers now start immediately with no end date","Eligible offers can be accepted and purchased in a single step","Microsoft now emails the offer to the customer automatically","Customers can no longer accept offers in the Azure portal"], correct:1,
+       explain:"Eligible private offers can now be accepted and purchased in one step. Customers who need extra governance can turn this off and keep the two-step process."},
+      {q:"How do you add a “Request private offer” option to your listing?", options:["It's on automatically for every offer","Turn on the setting for an eligible transactable offer and republish it","Microsoft support enables it on request","Only multiparty offers support it"], correct:1,
+       explain:"The option is off by default. You turn it on per eligible transactable offer (SaaS, Azure application, container, or VM) and republish; requests then arrive as Marketplace leads."},
+      {q:"Which markets were added for multiparty private offers on July 16, 2026?", options:["Brazil, India, and Mexico","Australia, Japan, and South Africa","China, South Korea, and Singapore","Canada, Germany, and France"], correct:1,
+       explain:"Australia, Japan, and South Africa were added on July 16, 2026, bringing multiparty private offers to 36 markets."}
     ]
   },
   "gcp": {
@@ -661,7 +673,8 @@ var MODULES = {
       ["Not confirming entitlements before going live", "Usage-based billing won't report correctly if entitlements aren't configured ahead of time."],
       ["Assuming a default EULA applies automatically", "You still choose it explicitly — standard or custom — as its own step in the flow."],
       ["Thinking the private offer changes the public listing", "It doesn't — pricing and terms here are customer-specific and never touch the public listing."],
-      ["Building offers one at a time in the UI at real volume", "The Commerce Producer API supports programmatic creation — worth it once you're past a handful of offers a week."]
+      ["Building offers one at a time in the UI at real volume", "The Commerce Producer API supports programmatic creation — worth it once you're past a handful of offers a week."],
+      ["Setting up a reseller plan before checking resale is enabled", "If resale isn't enabled for the product, resellers can't buy it using their own Cloud Billing account — confirm it before you create the plan."]
     ],
     learn:[
       {t:"Open the Producer Portal", s:"Private Offers → Create offer",
@@ -673,7 +686,12 @@ var MODULES = {
       {t:"Specify the EULA", s:"Default or custom terms",
        body:"<p>Use your product's standard marketplace EULA, or attach custom terms for this deal.</p>"},
       {t:"Review &amp; publish", s:"Sent to the customer's account",
-       body:"<p>Review the four sections — product/customer, pricing, EULA, and the summary — then publish. The offer becomes visible to that customer against their Cloud Billing account for review and acceptance; you can also create and manage offers via the Commerce Producer API if you're automating this at volume.</p>"}
+       body:"<p>Review the four sections — product/customer, pricing, EULA, and the summary — then publish. The offer becomes visible to that customer against their Cloud Billing account for review and acceptance; you can also create and manage offers via the Commerce Producer API if you're automating this at volume.</p>"},
+      {t:"Resellers: create a reseller private offer plan", s:"Producer Portal → Reseller private offer plan → Create plan",
+       body:"<p>If a reseller will sell your product, you don't build each customer's offer yourself. In the Producer Portal, open the <b>Reseller private offer plan</b> page and choose <b>Create plan</b>. A plan includes a reseller discount that the end customer never sees, and it's either <b>single use</b> (one resold customer buying one product once) or <b>multi-use</b> (multiple customers buying through the same reseller).</p><p>You'll enter the plan name, scope, start and end dates, an accept-by deadline for the reseller, the product and pricing, and the billing account the plan applies to — the customer's Cloud Billing subaccount for single-use plans. Before you start, confirm that resale is enabled for the product, that you have access to view, create, and manage reseller discounts, and which billing account the reseller wants the plan applied to.</p><p>The reseller reviews and accepts the plan in the Partner Sales Console, then creates private offers for their customers from it.</p>",
+       callout:"Since November 8, 2026, reseller private offer plans can also amend existing public orders and existing private offers that were created through the private offer flow."},
+      {t:"Automate with the Commerce Producer API", s:"Available since July 24, 2026",
+       body:"<p>Since <b>July 24, 2026</b>, the Cloud Commerce Producer API can create, manage, and publish private offers programmatically. It can configure custom pricing models, attach EULA or SOW documents, and determine which active offer to amend — worth considering when you're building offers at volume.</p>"}
     ],
     quiz:[
       {q:"Where do you create a private offer in Google Cloud Marketplace?", options:["Google Cloud Console billing page","The Producer Portal's Private Offers page","Cloud Marketplace public listing editor","Google Admin console"], correct:1,
@@ -685,7 +703,13 @@ var MODULES = {
       {q:"For a SaaS product with usage-based components, what should you confirm before the offer goes live?", options:["That the customer has a support plan","That entitlements are configured so consumption reports correctly","That the product has a public listing","That the EULA is notarized"], correct:1,
        explain:"Entitlements need to be set up correctly so usage-based consumption reports properly once the private offer is active."},
       {q:"Besides the Producer Portal UI, how else can offers be created and managed at volume?", options:["They can't — UI only","Via the Commerce Producer API","By emailing Google Cloud support","Through a CSV bulk upload only"], correct:1,
-       explain:"The Commerce Producer API supports programmatic creation and management, useful if you're automating this at scale."}
+       explain:"The Commerce Producer API supports programmatic creation and management, useful if you're automating this at scale."},
+      {q:"How does a reseller get to create private offers for its customers on Google Cloud Marketplace?", options:["The ISV creates a reseller private offer plan, and the reseller accepts it and builds offers from it","The reseller edits the ISV's public listing","Google creates the offers for the reseller","Resellers can only sell at public list prices"], correct:0,
+       explain:"The ISV sets up a reseller private offer plan (with a discount the end customer never sees). The reseller accepts it in the Partner Sales Console and creates private offers for customers from it."},
+      {q:"As of November 2026, what can a reseller private offer plan amend?", options:["Only brand-new orders","Existing public orders and existing private offers created through the private offer flow","Nothing — plans can't amend orders","Only offers created through the API"], correct:1,
+       explain:"Since November 8, 2026, reseller private offer plans can amend existing public orders and existing private offers created through the private offer flow."},
+      {q:"Which of these can the Cloud Commerce Producer API do for private offers?", options:["Only read reports","Create, manage, and publish them, including attaching EULA or SOW documents","Approve the customer's purchase on their behalf","Change the product's public list price"], correct:1,
+       explain:"Since July 24, 2026, the API can create, manage, and publish private offers, configure custom pricing models, attach EULA or SOW documents, and determine which active offer to amend."}
     ]
   }
 };
