@@ -486,7 +486,9 @@ var MODULES = {
       ["Picking the wrong product at step 1", "It can't be changed after the offer is created — you'd have to clone the offer into a new one instead."],
       ["Reading the expiration date in local time", "It's evaluated at 23:59:59 UTC. An offer you think expires “tonight” may already be gone for a buyer in another timezone."],
       ["Sending the offer link right after clicking Create", "Publishing runs through the Catalog API and can take up to an hour — the buyer won't see anything yet if you send it immediately."],
-      ["Reusing the public EULA on a genuinely negotiated deal", "If the terms were actually negotiated, that belongs in custom legal terms or the SCMP — not the public EULA, which reflects list-price terms."]
+      ["Reusing the public EULA on a genuinely negotiated deal", "If the terms were actually negotiated, that belongs in custom legal terms or the SCMP — not the public EULA, which reflects list-price terms."],
+      ["Negotiating payment timing but not setting it on the offer", "Net payment terms (Net 30, 45, 60 or 90) are configurable on a private offer. If you agreed a due date with the buyer, set it so the invoice matches — the buyer sees it before accepting."],
+      ["Amending an offer and forgetting what's still unpaid", "An agreement-based offer's payment terms override any remaining payments not yet invoiced, so carry over any pending payment terms from the original offer."]
     ],
     learn:[
       {t:"Start the offer", s:"AWS Partner Central → Private offers → Create private offer",
@@ -496,8 +498,8 @@ var MODULES = {
        body:"<p>Give the offer a clear internal name and detail, state the <b>offer purpose</b> — a new customer, a renewal of an existing AWS Marketplace agreement, or a customer migrating an off-Marketplace agreement onto AWS Marketplace — and set the <b>expiration date</b> (offer becomes void at 23:59:59 UTC that day).</p>",
        fields:[["Offer name","Internal + buyer-visible"],["Offer purpose","New / Renewal / Migration"],["Expiration date","UTC end-of-day"]]},
       {t:"Pricing &amp; duration", s:"Model, term, amount, currency",
-       body:"<p>Choose the pricing model (contract, usage-based, or contract with a consumption component), the contract or usage duration, the price, and the payment schedule. Private offers can be priced in non-USD currencies — public listings and pure consumption pricing stay in USD — so if you quote non-USD, make sure the buyer's account region supports it and your disbursement preferences are configured.</p>",
-       fields:[["Pricing model","Contract / usage / hybrid"],["Duration","Months or custom"],["Currency","Private offers allow non-USD"],["Payment schedule","Upfront / installments"]]},
+       body:"<p>Choose the pricing model (contract, usage-based, or contract with a consumption component), the contract or usage duration, the price, and the payment schedule. Private offers can be priced in non-USD currencies — public listings and pure consumption pricing stay in USD — so if you quote non-USD, make sure the buyer's account region supports it and your disbursement preferences are configured.</p><p>You can also set <b>net payment terms</b> — Net 30, Net 45, Net 60, or Net 90 — so the invoice due date matches what you and the buyer negotiated. Before this feature, due dates followed the buyer's existing AWS payment terms for every Marketplace purchase. Buyers see the configured terms on the procurement page before they accept.</p>",
+       fields:[["Pricing model","Contract / usage / hybrid"],["Duration","Months or custom"],["Currency","Private offers allow non-USD"],["Payment schedule","Upfront / installments"],["Net payment terms","Net 30 / 45 / 60 / 90"]]},
       {t:"Add buyers", s:"Up to 24 AWS account IDs",
        body:"<p>Enter the AWS account ID for each buyer this offer extends to — up to 24 accounts on one offer. Every buyer account must be in a region that supports the currency you picked.</p>"},
       {t:"Legal terms", s:"EULA, standard contract, or custom",
@@ -506,7 +508,15 @@ var MODULES = {
        body:"<p>Decide whether the agreement renews automatically with no price change, a fixed-percentage uplift, or a percentage range the buyer can adjust before a deadline — or doesn't renew at all. Set a renewal maximum (a number of cycles, or unlimited) and the decision deadline buyers must respond by.</p>"},
       {t:"Review &amp; create", s:"Publish and notify buyers",
        body:"<p>Check every section on the review page, then choose <b>Create offer</b>. AWS validates and publishes through the Marketplace Catalog API — this can take up to an hour — after which it appears on the buyer's <b>Available private offers</b> tab. Copy the offer URL from <b>Actions → Copy Offer URL</b> if you need to send it directly.</p>",
-       callout:"Draft offers don't count against retention limits, so it's fine to start one and come back — nothing is sent until you choose Create offer."}
+       callout:"Draft offers don't count against retention limits, so it's fine to start one and come back — nothing is sent until you choose Create offer."},
+      {t:"Amend, upgrade or renew later", s:"Agreements tab → Create agreement-based offer",
+       body:"<p>Once a buyer has accepted, you don't need to build a brand-new offer to change the deal. In the AWS Marketplace Management Portal, open the <b>Agreements</b> tab, search for the buyer's account ID, select their current agreement, and choose <b>Create agreement-based offer</b>. It replaces the active agreement so you can adjust pricing, duration, or terms, upgrade to a different tier, or renew before the contract ends.</p><p>For a CPPO, the ISV first creates a selling authorization for the partner, who then picks it from the <b>Selling Authorization</b> list when creating the agreement-based offer.</p><p>Agreement-based offers currently support SaaS products with contract and contract-with-consumption pricing. SaaS usage-based, AMI, and container products don't support amendments, and an amended offer can't have a future start date — once accepted, it becomes active immediately. Confirm current product-type support in the AWS Marketplace Seller Guide.</p>",
+       fields:[["Where","Agreements tab"],["Action","Create agreement-based offer"],["Start date","Immediate — no future dating"]],
+       callout:"Include any pending payment terms from the original offer — the amended offer overrides remaining payments that haven't been invoiced yet."},
+      {t:"Bundle offers with an offer set", s:"Offers → Private Offer Sets → Create offer set",
+       body:"<p>When a customer is buying a multi-product solution, an <b>offer set</b> combines several private offers into a single-click purchase. In the Management Portal, go to <b>Offers → Private Offer Sets</b> and choose <b>Create offer set</b>. Standard private offer features such as flexible payments and local currency still apply.</p><p>Not supported inside an offer set: public offers, replacement offers (amendments), and free trial offers.</p>"},
+      {t:"Multiple purchases of the same product", s:"Concurrent Agreements",
+       body:"<p><b>Concurrent Agreements</b> let one buyer account make multiple purchases of the same SaaS or professional services product — for example, different business units each buying with their own negotiated terms and pricing. It's on by default for professional services listings. Since June 1, 2026, support is required for new SaaS products, and existing SaaS listings can opt in once the integration work is complete.</p>"}
     ],
     quiz:[
       {q:"A channel partner wants to resell an ISV's product to a customer under a CPPO. What do they need to select at offer creation that a standard offer doesn't require?", options:["A different pricing model","The ISV and a valid resale authorization","A longer expiration date","A public offer EULA"], correct:1,
@@ -520,7 +530,15 @@ var MODULES = {
       {q:"After you choose “Create offer,” how long can AWS take to validate and publish it?", options:["Instantly","Up to 1 hour, via the Marketplace Catalog API","24–48 hours","It only publishes after the buyer pays"], correct:1,
        explain:"Publishing runs through the Marketplace Catalog API and can take up to an hour before the buyer sees it under Available private offers."},
       {q:"What is the “renewal decision deadline” for?", options:["The date the offer itself expires","The last day the buyer can change their auto-renewal choice","The date pricing goes live","The deadline for the seller to cancel the offer"], correct:1,
-       explain:"It's the last day the buyer has to finalize or change their renewal decision — separate from the offer's own expiration date."}
+       explain:"It's the last day the buyer has to finalize or change their renewal decision — separate from the offer's own expiration date."},
+      {q:"Which net payment terms can a seller configure on a private offer?", options:["Net 7 or Net 14 only","Net 30, Net 45, Net 60, or Net 90","Only whatever the buyer's AWS default is","Any number of days the seller types in"], correct:1,
+       explain:"Sellers can choose Net 30, 45, 60, or 90 so the invoice due date matches what was negotiated, and buyers see it before accepting."},
+      {q:"A buyer already accepted your private offer and now wants to upgrade to a higher tier mid-term. Where do you start?", options:["Create a brand-new private offer from the Offers list","The Agreements tab, then Create agreement-based offer","Ask the buyer to cancel the subscription first","Edit the original, already-accepted offer"], correct:1,
+       explain:"Agreement-based offers replace an active agreement so you can adjust pricing, duration, or terms, upgrade, or renew — started from the Agreements tab."},
+      {q:"Which of these can NOT be included in an offer set?", options:["Offers with flexible payment schedules","Offers priced in a local currency","Replacement offers (amendments)","Private offers for different products in one solution"], correct:2,
+       explain:"Offer sets support standard private offers, including flexible payments and local currency. Public offers, replacement offers, and free trial offers are not supported."},
+      {q:"What do Concurrent Agreements allow?", options:["Several sellers to share one offer","One buyer account to make multiple purchases of the same SaaS or professional services product","Only one agreement per product per account","A private offer to reach more than 24 accounts"], correct:1,
+       explain:"Concurrent Agreements let different business units in one account buy the same product independently, each with their own negotiated terms and pricing."}
     ]
   },
   "aws-express": {
@@ -552,7 +570,9 @@ var MODULES = {
       {t:"Set global controls", s:"TCV ceiling, discount cap",
        body:"<p>Set a <b>Global TCV Maximum</b> — deals above it route to your sales-assisted workflow instead of auto-approving — and a <b>Maximum Discount Cap</b> across every combined rate card (you can set this to 0% to allow qualification without any discount). Quantities that fall outside any configured tier automatically get a 0% discount; duration-based discounting and consumption components on CCP products can't be discounted at all.</p>"},
       {t:"The buyer's experience", s:"Instant offer or sales hand-off",
-       body:"<p>The buyer clicks the button on your listing, an AI-guided flow asks any buyer-profile questions and checks quantity or contract value against your rate card, and qualified buyers get an instantly generated offer (named to identify it as an Express Private Offer) that then behaves exactly like a standard private offer for acceptance and billing. Anyone who exceeds your TCV maximum or fails a qualifier is redirected to talk to your sales team.</p>"}
+       body:"<p>The buyer clicks the button on your listing, an AI-guided flow asks any buyer-profile questions and checks quantity or contract value against your rate card, and qualified buyers get an instantly generated offer (named to identify it as an Express Private Offer) that then behaves exactly like a standard private offer for acceptance and billing. Anyone who exceeds your TCV maximum or fails a qualifier is redirected to talk to your sales team.</p>"},
+      {t:"Co-sell: AWS sellers can send your link", s:"Launched June 17, 2026",
+       body:"<p>Since <b>June 17, 2026</b>, when an AWS internal seller shares an opportunity with you, they can automatically send your express private offer link to the customer — so pricing can reach the customer within minutes, with fewer manual follow-ups. If you already have Express Private Offers enabled, you're included automatically. Enrolling in AWS co-sell programs isn't required to use Express, though sellers in those programs are well placed to benefit.</p>"}
     ],
     quiz:[
       {q:"What actually triggers an Express Private Offer?", options:["The seller creates it manually for a named buyer","The buyer clicks “Get Express Private Offer” on the listing", "AWS generates one automatically every quarter","A support ticket the buyer files"], correct:1,
@@ -566,7 +586,9 @@ var MODULES = {
       {q:"Which of these CAN be discounted through an Express Private Offer rate card?", options:["Consumption components on a CCP product","Duration-based discounts","A dimension quantity tier","Buyer's payment method"], correct:2,
        explain:"Dimension quantity tiers are a supported basis. Consumption components on CCP products and duration-based discounting are both explicitly unsupported."},
       {q:"What must be true about a product before Express Private Offers can be enabled for it?", options:["It must be a BYOL listing","It must have an active SaaS contract listing (or SaaS contract with pay-as-you-go)","It must already have 10+ private offers","It must be free-tier eligible"], correct:1,
-       explain:"Express Private Offers require an active SaaS contract listing, or a SaaS contract with pay-as-you-go — plus completed onboarding for the button itself."}
+       explain:"Express Private Offers require an active SaaS contract listing, or a SaaS contract with pay-as-you-go — plus completed onboarding for the button itself."},
+      {q:"An AWS internal seller shares an opportunity with you, and you already have Express Private Offers enabled. What can they do under the June 2026 co-sell integration?", options:["Edit your rate card","Automatically send your express private offer link to the customer","Approve discounts above your TCV maximum","Create a CPPO on your behalf"], correct:1,
+       explain:"The integration lets AWS internal sellers automatically send express private offer links to customers, so pricing can arrive within minutes. Sellers who already have Express enabled are included automatically."}
     ]
   },
   "azure": {
@@ -1178,6 +1200,7 @@ function buildAwsStandardWizard(host, key){
             fieldHTML({id:"amount", label:"Total contract value", type:"number", required:true, placeholder:"150000"}, P) +
             fieldHTML({id:"currency", label:"Currency", type:"select", required:true, options:["USD","EUR","GBP","CAD","AUD"]}, P) +
             fieldHTML({id:"schedule", label:"Payment schedule", type:"select", required:true, placeholder:"Select…", options:["Upfront","Monthly","Quarterly","Custom installments"]}, P) +
+            fieldHTML({id:"netTerms", label:"Net payment terms", type:"select", placeholder:"Optional — select…", options:["Net 30","Net 45","Net 60","Net 90"], hint:"Sets when each invoice is due. Buyers see this before accepting."}, P) +
             '</div>';
         }, validate:function(body){ return validateStep(body); }
       },
@@ -1217,6 +1240,7 @@ function buildAwsStandardWizard(host, key){
             ["Duration", getVal(P,"duration")],
             ["Total contract value", getVal(P,"amount") ? (getVal(P,"currency")+" "+getVal(P,"amount")) : ""],
             ["Payment schedule", getVal(P,"schedule")],
+            ["Net payment terms", getVal(P,"netTerms") || "Not set"],
             ["Buyer account(s)", getVal(P,"buyers")],
             ["Legal terms", getRadio(P,"legal")],
             ["Auto-renewal", getVal(P,"renew")]
